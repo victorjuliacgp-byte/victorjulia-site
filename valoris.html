@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valoris · Estimez votre entreprise · Victor Julia CGP</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#C9A84C; --gold-light:#e8c96a; --gold-dim:rgba(201,168,76,.12);
+  --navy:#0D1F3C; --navy-mid:#1a3260; --navy-light:#243d72;
+  --cream:#F8F5EF; --white:#fff;
+  --text:#1a1a2e; --muted:#6b7285; --border:rgba(26,26,46,.09);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);min-height:100vh;display:flex;flex-direction:column;color:var(--white);}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.9rem 3rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.tl{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:.5rem;opacity:.7;}
+.tl span{width:5px;height:5px;border-radius:50%;background:var(--gold);display:inline-block;}
+.tb{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;}
+.tb:hover{color:rgba(255,255,255,.7);}
+
+/* HERO */
+.hero{padding:4rem 3rem 3rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.06);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-80px;right:-80px;width:280px;height:280px;border-radius:50%;border:1px solid rgba(201,168,76,.07);
+  pointer-events:none;
+}
+.hero::after{content:'';position:absolute;bottom:-50px;left:-50px;width:200px;height:200px;border-radius:50%;border:1px solid rgba(201,168,76,.05);
+  pointer-events:none;
+}
+.h-tag{display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:.25rem .85rem;border-radius:2px;margin-bottom:1.2rem;position:relative;z-index:1;}
+.h-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--white);line-height:1.15;margin-bottom:.7rem;position:relative;z-index:1;}
+.h-title em{font-style:italic;color:var(--gold);}
+.h-sub{font-size:.85rem;color:rgba(255,255,255,.42);max-width:500px;margin:0 auto;line-height:1.8;position:relative;z-index:1;}
+
+/* PROGRESS */
+.prog-wrap{background:rgba(0,0,0,.25);height:3px;}
+.prog-fill{height:3px;background:var(--gold);transition:width .6s ease;width:0%;}
+
+/* STEPS INDICATOR */
+.steps-nav{display:flex;justify-content:center;gap:0;border-bottom:1px solid rgba(255,255,255,.06);}
+.sn{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.9rem 1.5rem;color:rgba(255,255,255,.2);border-bottom:2px solid transparent;transition:all .3s;cursor:default;}
+.sn.done{color:rgba(255,255,255,.35);}
+.sn.active{color:var(--gold);border-bottom-color:var(--gold);}
+
+/* MAIN */
+.main{flex:1;max-width:780px;margin:0 auto;width:100%;padding:3rem 2rem;}
+
+/* BLOCKS */
+.block{display:none;animation:fadeUp .3s ease both;}
+.block.on{display:block;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.block-title{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--white);margin-bottom:.3rem;}
+.block-hint{font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:2rem;line-height:1.6;}
+
+/* INPUTS */
+.fg{margin-bottom:1.2rem;}
+.fg label{display:block;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:.45rem;}
+.fg input,.fg select,.fg textarea{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:.72rem .9rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.fg select option{background:var(--navy-mid);}
+.fg input:focus,.fg select:focus{border-color:rgba(201,168,76,.5);}
+.fg input::placeholder{color:rgba(255,255,255,.2);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+.fg-hint{font-size:.72rem;color:rgba(255,255,255,.22);margin-top:.35rem;line-height:1.5;}
+.fg-unit{position:relative;}
+.fg-unit input{padding-right:2.2rem;}
+.fg-unit .unit{position:absolute;right:.9rem;top:50%;transform:translateY(-50%);font-size:.82rem;color:rgba(255,255,255,.3);}
+
+/* SECTOR GRID */
+.sector-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.7rem;margin-bottom:1.5rem;}
+.sc{border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:1rem .7rem;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.03);text-align:center;}
+.sc:hover{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06);}
+.sc.sel{border-color:var(--gold);background:rgba(201,168,76,.1);}
+.sc-icon{font-size:1.4rem;margin-bottom:.4rem;display:block;}
+.sc-label{font-size:.72rem;color:rgba(255,255,255,.65);line-height:1.3;}
+.sc.sel .sc-label{color:var(--white);}
+
+/* QUAL CARDS */
+.qual-block{margin-bottom:1.5rem;}
+.qual-q{font-size:.88rem;color:rgba(255,255,255,.7);margin-bottom:.7rem;}
+.qual-opts{display:flex;flex-direction:column;gap:.5rem;}
+.qo{display:flex;align-items:flex-start;gap:.8rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:.85rem 1rem;cursor:pointer;transition:all .2s;text-align:left;}
+.qo:hover{border-color:rgba(201,168,76,.35);background:rgba(201,168,76,.05);}
+.qo.sel{border-color:var(--gold);background:rgba(201,168,76,.09);}
+.qo-radio{width:16px;height:16px;min-width:16px;border-radius:50%;border:2px solid rgba(255,255,255,.2);margin-top:.1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0;}
+.qo.sel .qo-radio{border-color:var(--gold);background:var(--gold);}
+.qo.sel .qo-radio::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--navy);}
+.qo-text{font-size:.82rem;color:rgba(255,255,255,.6);line-height:1.45;}
+.qo.sel .qo-text{color:var(--white);}
+
+/* NAV */
+.fnav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.07);}
+.btn-next{background:var(--gold);color:var(--navy);padding:.8rem 2.2rem;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .2s;}
+.btn-next:hover{background:var(--gold-light);}
+.btn-back{background:transparent;color:rgba(255,255,255,.3);border:none;cursor:pointer;font-size:.78rem;font-family:'DM Sans',sans-serif;letter-spacing:.06em;transition:color .2s;}
+.btn-back:hover{color:rgba(255,255,255,.7);}
+
+/* SENDING SCREEN */
+.sending{display:none;text-align:center;padding:5rem 2rem;}
+.sending.on{display:block;animation:fadeUp .4s ease both;}
+.send-anim{width:80px;height:80px;border-radius:50%;border:2px solid rgba(201,168,76,.2);border-top-color:var(--gold);animation:spin 1s linear infinite;margin:0 auto 2rem;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.send-title{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--white);margin-bottom:.5rem;}
+.send-sub{font-size:.85rem;color:rgba(255,255,255,.4);line-height:1.8;}
+
+/* SUCCESS SCREEN */
+.success{display:none;text-align:center;padding:5rem 2rem;background:var(--navy);}
+.success.on{display:block;animation:fadeUp .5s ease both;background:var(--navy);}
+.suc-check{width:72px;height:72px;border-radius:50%;background:rgba(29,158,117,.15);border:2px solid rgba(29,158,117,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 2rem;font-size:1.8rem;}
+.suc-title{font-family:'Cormorant Garamond',serif;font-size:2rem;color:var(--white);margin-bottom:.6rem;}
+.suc-sub{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.85;max-width:440px;margin:0 auto 2.5rem;}
+.suc-sub strong{color:var(--white);}
+.suc-actions{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.btn-rdv{background:var(--gold);color:var(--navy);padding:.85rem 2rem;border-radius:2px;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;font-weight:500;transition:background .2s;}
+.btn-rdv:hover{background:var(--gold-light);}
+.btn-site{background:transparent;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.15);padding:.85rem 2rem;border-radius:2px;font-size:.8rem;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;transition:all .2s;}
+.btn-site:hover{color:rgba(255,255,255,.8);border-color:rgba(255,255,255,.4);}
+
+/* BOTTOM */
+.bottom{border-top:1px solid rgba(255,255,255,.06);padding:1.5rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem;}
+.bot-txt{font-size:.72rem;color:rgba(255,255,255,.2);}
+.bot-link{font-size:.72rem;color:rgba(255,255,255,.25);text-decoration:none;}
+
+@media(max-width:700px){
+  .topbar,.main,.bottom{padding-left:1.5rem;padding-right:1.5rem;}
+  .hero{padding:3rem 1.5rem 2.5rem;}
+  .sector-grid{grid-template-columns:repeat(3,1fr);}
+  .frow{grid-template-columns:1fr;}
+  .steps-nav{overflow-x:auto;}
+  .sn{white-space:nowrap;padding:.8rem 1rem;}
+}
+</style>
+
+<style id="shared-nav-css">
+:root {
+  --gold:#C9A84C; --gold-light:#e8c96a;
+  --navy:#0D1F3C; --navy-mid:#1a3260;
+  --cream:#F8F5EF; --white:#fff;
+  --forest:#0A3D35; --night:#14142B;
+  --muted:#6b7285; --border:rgba(26,26,46,.09);
+}
+.snav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.9rem 3rem;
+  background:rgba(13,31,60,.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-family:'DM Sans',sans-serif;
+}
+.snav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem; color:var(--white); text-decoration:none;
+  display:flex; align-items:center; gap:.5rem;
+}
+.snav-logo-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); display:inline-block; }
+.snav-links { display:flex; gap:0; list-style:none; align-items:center; }
+.snav-links li { position:relative; }
+.snav-links a {
+  font-size:.75rem; letter-spacing:.07em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); text-decoration:none;
+  padding:.5rem .9rem; display:block; transition:color .2s;
+}
+.snav-links a:hover { color:var(--white); }
+.snav-links .active-page > a { color:var(--gold); }
+
+/* Dropdown */
+.snav-drop { position:relative; }
+.snav-drop-trigger {
+  display:flex; align-items:center; gap:.3rem; cursor:pointer;
+  font-size:.75rem; letter-spacing:.07em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); padding:.5rem .9rem;
+  transition:color .2s; background:none; border:none;
+  font-family:'DM Sans',sans-serif;
+}
+.snav-drop-trigger:hover { color:var(--white); }
+.snav-drop-trigger .arr { font-size:.55rem; transition:transform .2s; }
+.snav-drop:hover .arr { transform:rotate(180deg); }
+.snav-drop-menu {
+  display:none; position:absolute; top:calc(100% + .5rem); left:50%;
+  transform:translateX(-50%);
+  background:var(--navy-mid); border:1px solid rgba(255,255,255,.1);
+  border-radius:4px; min-width:220px;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+  overflow:hidden; z-index:600;
+}
+.snav-drop:hover .snav-drop-menu { display:block; }
+.snav-drop::after { content:''; position:absolute; top:100%; left:0; right:0; height:.8rem; 
+  pointer-events:none;
+}
+.snav-drop-menu a {
+  display:flex; align-items:center; gap:.7rem;
+  padding:.85rem 1.2rem; font-size:.78rem; letter-spacing:.04em;
+  text-transform:none; color:rgba(255,255,255,.65);
+  text-decoration:none; border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background .15s, color .15s;
+}
+.snav-drop-menu a:last-child { border-bottom:none; }
+.snav-drop-menu a:hover { background:rgba(255,255,255,.06); color:var(--white); }
+.snav-drop-menu .dm-tag {
+  font-size:.6rem; letter-spacing:.08em; text-transform:uppercase;
+  padding:.15rem .45rem; border-radius:2px; flex-shrink:0;
+}
+.snav-drop-menu .dm-tag.navy { background:rgba(201,168,76,.15); color:var(--gold); }
+.snav-drop-menu .dm-tag.forest { background:rgba(29,158,117,.15); color:#1D9E75; }
+.snav-drop-menu .dm-tag.night { background:rgba(83,74,183,.15); color:#7B75D4; }
+
+.snav-cta {
+  background:var(--gold); color:var(--navy);
+  padding:.5rem 1.2rem; border-radius:2px;
+  font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+  text-decoration:none; font-weight:500; transition:background .2s;
+  margin-left:.5rem; white-space:nowrap;
+}
+.snav-cta:hover { background:var(--gold-light); }
+
+@media(max-width:900px) {
+  .snav { padding:.9rem 1.5rem; }
+  .snav-links { display:none; }
+}
+
+/* HAMBURGER MOBILE */
+.snav-hamburger {
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+  padding:.4rem;
+  background:none;
+  border:none;
+}
+.snav-hamburger span {
+  display:block;
+  width:24px;
+  height:2px;
+  background:rgba(255,255,255,.7);
+  transition:all .3s;
+  border-radius:1px;
+}
+.snav-mobile-menu {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:490;
+  background:rgba(13,31,60,.98);
+  backdrop-filter:blur(20px);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+}
+.snav-mobile-menu.open { display:flex; }
+.snav-mobile-menu a, .snav-mobile-menu button {
+  font-family:'DM Sans',sans-serif;
+  font-size:1.2rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+  text-decoration:none;
+  padding:1rem 2rem;
+  width:100%;
+  text-align:center;
+  border:none;
+  background:none;
+  cursor:pointer;
+  transition:color .2s;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.snav-mobile-menu a:hover, .snav-mobile-menu button:hover { color:var(--white); }
+.snav-mobile-menu .mob-sub {
+  font-size:.85rem;
+  color:rgba(255,255,255,.4);
+  padding:.6rem 2rem;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  letter-spacing:.05em;
+}
+.snav-mobile-menu .mob-sub:hover { color:rgba(255,255,255,.7); }
+.snav-mobile-close {
+  position:absolute;
+  top:1.2rem;
+  right:1.5rem;
+  font-size:1.5rem;
+  color:rgba(255,255,255,.4);
+  cursor:pointer;
+  background:none;
+  border:none;
+  line-height:1;
+}
+@media(max-width:900px) {
+  .snav-links { display:none !important; }
+  .snav-cta { display:none !important; }
+  .snav-hamburger { display:flex !important; }
+  .snav { padding:.9rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+<nav class="snav" id="sharedNav">
+  <a href="index.html" class="snav-logo">
+    <span class="snav-logo-dot"></span>Victor Julia CGP
+  </a>
+  <ul class="snav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="index.html#univers">Expertises</a></li>
+    <li class="snav-drop">
+      <button class="snav-drop-trigger">Simulateurs <span class="arr">▾</span></button>
+      <div class="snav-drop-menu">
+        <a href="valoris.html"><span class="dm-tag navy">Dirigeants</span>Valoris</a>
+        <a href="diagnostic-prevoyance.html"><span class="dm-tag forest">Santé</span>PrevPro</a>
+        <a href="simulateur-renego.html"><span class="dm-tag night">Emprunteurs</span>Assurance emprunteur</a>
+      </div>
+    </li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#about">À propos</a></li>
+  </ul>
+  <a href="https://cal.com/victor-julia/30min" target="_blank" class="snav-cta">Prendre RDV</a>
+</nav>
+<script>
+// Highlight active page
+(function(){
+  var p = window.location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.snav-links a').forEach(function(a){
+    if(a.getAttribute('href')===p) a.parentElement.classList.add('active-page');
+  });
+  // Email anti-obfuscation
+  document.querySelectorAll('[data-email]').forEach(function(el){
+    var e = el.getAttribute('data-email');
+    el.href = 'mailto:' + e;
+    if(el.getAttribute('data-show')) el.textContent = e;
+  });
+})();
+</script>
+
+<div class="hero" style="padding-top:58px" >
+  <span class="h-tag">Valorisation d'entreprise · Gratuit · 5 minutes</span>
+  <h1 class="h-title"><em>Valoris</em> · Combien vaut votre entreprise ?</h1>
+  <p class="h-sub">Quelques questions sur votre activité, vos chiffres et votre marché. Vous recevez ensuite un rapport complet, préparé par Victor.</p>
+</div>
+
+<div class="prog-wrap"><div class="prog-fill" id="pf"></div></div>
+
+<div class="steps-nav">
+  <div class="sn active" id="sn1">Contexte</div>
+  <div class="sn" id="sn2">Secteur</div>
+  <div class="sn" id="sn3">Finances</div>
+  <div class="sn" id="sn4">Qualitatif</div>
+  <div class="sn" id="sn5">Contact</div>
+</div>
+
+<div class="main">
+
+  <!-- BLOC 1 : Contexte -->
+  <div class="block on" id="b1">
+    <div class="block-title">Votre entreprise</div>
+    <div class="block-hint">Ces informations apparaîtront sur votre rapport de valorisation.</div>
+    <div class="fg"><label>Nom de l'entreprise</label><input type="text" id="f_nom_ent" placeholder="Cabinet Dupont, SAS Martin..."></div>
+    <div class="frow">
+      <div class="fg"><label>Votre prénom et nom</label><input type="text" id="f_nom" placeholder="Pierre Dupont"></div>
+      <div class="fg">
+        <label>Votre rôle</label>
+        <select id="f_role">
+          <option value="">Sélectionner...</option>
+          <option>Propriétaire / Dirigeant</option>
+          <option>Management</option>
+          <option>Conseiller financier</option>
+          <option>Comptabilité / Droit</option>
+          <option>Investisseur</option>
+          <option>Autre</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg">
+      <label>Pourquoi souhaitez-vous valoriser cette entreprise ?</label>
+      <select id="f_raison">
+        <option value="">Sélectionner...</option>
+        <option value="vente">Vente partielle ou totale</option>
+        <option value="obo">Stratégie OBO (rachat via holding)</option>
+        <option value="transmission">Transmission familiale</option>
+        <option value="levee">Levée de fonds</option>
+        <option value="divorce">Divorce / séparation</option>
+        <option value="parts">Évaluation de parts minoritaires</option>
+        <option value="curiosite">Curiosité / connaissance</option>
+      </select>
+    </div>
+    <div class="fnav">
+      <span></span>
+      <button class="btn-next" onclick="goB(2)">Suivant →</button>
+    </div>
+  </div>
+
+  <!-- BLOC 2 : Secteur -->
+  <div class="block" id="b2">
+    <div class="block-title">Secteur d'activité</div>
+    <div class="block-hint">Choisissez le secteur qui correspond le mieux à votre activité principale.</div>
+    <div class="sector-grid" id="sectorGrid">
+      <div class="sc" data-val="sante" data-mult="1.2" onclick="pickSector(this)">
+        <span class="sc-icon">🏥</span>
+        <div class="sc-label">Santé et professions médicales</div>
+      </div>
+      <div class="sc" data-val="services_pro" data-mult="1.1" onclick="pickSector(this)">
+        <span class="sc-icon">💼</span>
+        <div class="sc-label">Services aux entreprises</div>
+      </div>
+      <div class="sc" data-val="commerce" data-mult="0.7" onclick="pickSector(this)">
+        <span class="sc-icon">🛒</span>
+        <div class="sc-label">Commerce et distribution</div>
+      </div>
+      <div class="sc" data-val="restauration" data-mult="0.6" onclick="pickSector(this)">
+        <span class="sc-icon">🍽️</span>
+        <div class="sc-label">Restauration et hôtellerie</div>
+      </div>
+      <div class="sc" data-val="artisanat" data-mult="0.65" onclick="pickSector(this)">
+        <span class="sc-icon">🔧</span>
+        <div class="sc-label">Artisanat et construction</div>
+      </div>
+      <div class="sc" data-val="industrie" data-mult="0.8" onclick="pickSector(this)">
+        <span class="sc-icon">🏭</span>
+        <div class="sc-label">Industrie et production</div>
+      </div>
+      <div class="sc" data-val="tech" data-mult="3.0" onclick="pickSector(this)">
+        <span class="sc-icon">💻</span>
+        <div class="sc-label">Tech et logiciels</div>
+      </div>
+      <div class="sc" data-val="immo" data-mult="0.9" onclick="pickSector(this)">
+        <span class="sc-icon">🏠</span>
+        <div class="sc-label">Immobilier et agences</div>
+      </div>
+      <div class="sc" data-val="liberal" data-mult="1.0" onclick="pickSector(this)">
+        <span class="sc-icon">⚖️</span>
+        <div class="sc-label">Professions libérales (droit, conseil...)</div>
+      </div>
+      <div class="sc" data-val="autre" data-mult="0.9" onclick="pickSector(this)">
+        <span class="sc-icon">📦</span>
+        <div class="sc-label">Autre activité</div>
+      </div>
+    </div>
+    <div class="fnav">
+      <button class="btn-back" onclick="goB(1)">← Retour</button>
+      <button class="btn-next" onclick="goB(3)">Suivant →</button>
+    </div>
+  </div>
+
+  <!-- BLOC 3 : Finances -->
+  <div class="block" id="b3">
+    <div class="block-title">Données financières</div>
+    <div class="block-hint">Utilisez les chiffres de votre dernier exercice complet. Ces données sont strictement confidentielles.</div>
+
+    <div class="frow">
+      <div class="fg fg-unit">
+        <label>Chiffre d'affaires annuel</label>
+        <input type="number" id="f_ca" placeholder="350 000">
+        <span class="unit">€</span>
+      </div>
+      <div class="fg">
+        <label>Année de création de l'entreprise</label>
+        <input type="number" id="f_annee_creation" placeholder="2010" min="1900" max="2025">
+      </div>
+      <div class="fg fg-unit">
+        <label>Taux de croissance prévu (3 ans)</label>
+        <input type="number" id="f_croissance" placeholder="5" min="-50" max="200">
+        <span class="unit">%</span>
+        <div class="fg-hint">Votre estimation de croissance annuelle</div>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg fg-unit">
+        <label>Marge nette</label>
+        <input type="number" id="f_marge" placeholder="12" min="-100" max="100">
+        <span class="unit">%</span>
+        <div class="fg-hint">Résultat net / CA × 100</div>
+      </div>
+      <div class="fg fg-unit">
+        <label>Investissements annuels (Capex)</label>
+        <input type="number" id="f_capex" placeholder="20 000">
+        <span class="unit">€</span>
+        <div class="fg-hint">Hors charges salariales et R&D</div>
+      </div>
+    </div>
+
+    <div style="margin:1.5rem 0 1rem;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);">Bilan patrimonial</div>
+    <div class="frow">
+      <div class="fg fg-unit">
+        <label>Immobilier (valeur)</label>
+        <input type="number" id="f_immo" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+      <div class="fg fg-unit">
+        <label>Équipements et machines</label>
+        <input type="number" id="f_equip" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg fg-unit">
+        <label>Stocks</label>
+        <input type="number" id="f_stocks" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+      <div class="fg fg-unit">
+        <label>Trésorerie disponible</label>
+        <input type="number" id="f_treo" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg fg-unit">
+        <label>Créances clients</label>
+        <input type="number" id="f_creances" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+      <div class="fg fg-unit">
+        <label>Autres actifs</label>
+        <input type="number" id="f_autres_actifs" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+    </div>
+    <div class="frow">
+      <div class="fg fg-unit">
+        <label>Dettes bancaires</label>
+        <input type="number" id="f_dettes_banc" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+      <div class="fg fg-unit">
+        <label>Autres dettes</label>
+        <input type="number" id="f_dettes_autres" placeholder="0">
+        <span class="unit">€</span>
+      </div>
+    </div>
+    <div class="fnav">
+      <button class="btn-back" onclick="goB(2)">← Retour</button>
+      <button class="btn-next" onclick="goB(4)">Suivant →</button>
+    </div>
+  </div>
+
+  <!-- BLOC 4 : Qualitatif -->
+  <div class="block" id="b4">
+    <div class="block-title">Analyse qualitative</div>
+    <div class="block-hint">5 questions pour affiner la valorisation au-delà des chiffres.</div>
+
+    <div class="qual-block">
+      <div class="qual-q">Comment évaluez-vous le potentiel de votre marché ?</div>
+      <div class="qual-opts">
+        <div class="qo" data-q="marche" data-v="0.8" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Mon marché est de niche, avec un nombre limité d'acheteurs potentiels</div></div>
+        <div class="qo" data-q="marche" data-v="1.0" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Mon marché est de taille intermédiaire, avec une demande régulière</div></div>
+        <div class="qo" data-q="marche" data-v="1.2" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Mon marché est large et en croissance, avec de nombreuses opportunités</div></div>
+      </div>
+    </div>
+
+    <div class="qual-block">
+      <div class="qual-q">Quelle est votre position face à la concurrence ?</div>
+      <div class="qual-opts">
+        <div class="qo" data-q="concurrence" data-v="1.2" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Je me démarque clairement, avec peu d'acteurs comparables</div></div>
+        <div class="qo" data-q="concurrence" data-v="1.0" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">La concurrence existe mais mon offre a des atouts distinctifs</div></div>
+        <div class="qo" data-q="concurrence" data-v="0.75" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Le marché est saturé, la différenciation est difficile</div></div>
+      </div>
+    </div>
+
+    <div class="qual-block">
+      <div class="qual-q">Votre activité bénéficie-t-elle de protections ou de barrières à l'entrée ?</div>
+      <div class="qual-opts">
+        <div class="qo" data-q="protection" data-v="0.75" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Aucune barrière à l'entrée particulière, l'activité est facilement reproductible</div></div>
+        <div class="qo" data-q="protection" data-v="1.0" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Des démarches sont engagées (marque, brevet, certification...)</div></div>
+        <div class="qo" data-q="protection" data-v="1.2" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">L'activité est protégée par des droits formels ou des avantages concurrentiels forts</div></div>
+      </div>
+    </div>
+
+    <div class="qual-block">
+      <div class="qual-q">Quelle est l'étendue géographique de votre clientèle ?</div>
+      <div class="qual-opts">
+        <div class="qo" data-q="zone" data-v="0.8" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Clientèle essentiellement locale ou régionale</div></div>
+        <div class="qo" data-q="zone" data-v="1.0" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Présence nationale, clients répartis sur tout le territoire</div></div>
+        <div class="qo" data-q="zone" data-v="1.2" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Clientèle nationale et internationale</div></div>
+      </div>
+    </div>
+
+    <div class="qual-block">
+      <div class="qual-q">L'entreprise peut-elle fonctionner sans vous au quotidien ?</div>
+      <div class="qual-opts">
+        <div class="qo" data-q="dependance" data-v="0.7" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Non, mon rôle est central et difficilement délégable à court terme</div></div>
+        <div class="qo" data-q="dependance" data-v="1.0" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Partiellement, une équipe peut assurer la continuité sur quelques semaines</div></div>
+        <div class="qo" data-q="dependance" data-v="1.2" onclick="pickQual(this)"><div class="qo-radio"></div><div class="qo-text">Oui, des process et une équipe solide assurent le fonctionnement indépendamment</div></div>
+      </div>
+    </div>
+
+    <div class="fnav">
+      <button class="btn-back" onclick="goB(3)">← Retour</button>
+      <button class="btn-next" onclick="goB(5)">Suivant →</button>
+    </div>
+  </div>
+
+  <!-- BLOC 5 : Contact -->
+  <div class="block" id="b5">
+    <div class="block-title">Vos coordonnées</div>
+    <div class="block-hint">Victor reviendra vers vous à cette adresse sous 48h avec votre analyse complète.</div>
+    <div class="fg"><label>Email</label><input type="email" id="f_email" placeholder="pierre.dupont@cabinet.fr"></div>
+    <div class="fg"><label>Téléphone</label><input type="tel" id="f_tel" placeholder="06 XX XX XX XX"></div>
+    <div class="fg" style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:1rem 1.2rem;">
+      <div style="font-size:.75rem;color:rgba(255,255,255,.35);line-height:1.7;">
+        🔒 Vos données sont strictement confidentielles et utilisées uniquement dans le cadre de la génération de votre rapport Valoris. Elles ne sont jamais transmises à des tiers.
+      </div>
+    </div>
+    <div class="fnav">
+      <button class="btn-back" onclick="goB(4)">← Retour</button>
+      <button class="btn-next" onclick="submit()">Envoyer ma demande →</button>
+    </div>
+  </div>
+
+  <!-- SENDING -->
+  <div class="sending" id="sending">
+    <div class="send-anim"></div>
+    <div class="send-title">Calcul en cours...</div>
+    <div class="send-sub">Votre dossier a bien été transmis à Victor.<br>Il prépare votre analyse personnalisée.</div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success" id="success">
+    <div class="suc-check">✓</div>
+    <div class="suc-title">Demande reçue !</div>
+    <div class="suc-sub">
+      Victor a bien reçu votre dossier.<br><br>
+      Il reviendra vers vous sous <strong>48h ouvrées</strong> avec votre analyse de valorisation personnalisée et ses recommandations.
+    </div>
+    <div class="suc-actions">
+      <a href="https://cal.com/victor-julia/30min" target="_blank" class="btn-rdv">Prendre rendez-vous maintenant →</a>
+      <a href="https://merry-puffpuff-ddc641.netlify.app/" class="btn-site">Retour au site</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="bottom">
+  <span class="bot-txt">Valoris est un outil d'estimation indicatif. Les résultats ne constituent pas un conseil en investissement.</span>
+  <a href="https://merry-puffpuff-ddc641.netlify.app/" class="bot-link">victorjulia.fr</a>
+</div>
+
+<script>
+let currentBlock = 1;
+let selectedSector = null;
+const quals = {};
+
+// ── Navigation ──
+function goB(n) {
+  if(n === 2 && !validate(1)) return;
+  if(n === 3 && !validate(2)) return;
+  if(n === 4 && !validate(3)) return;
+  if(n === 5 && !validate(4)) return;
+
+  document.getElementById('b'+currentBlock).classList.remove('on');
+  currentBlock = n;
+  document.getElementById('b'+n).classList.add('on');
+
+  // Update step nav
+  [1,2,3,4,5].forEach(i => {
+    const el = document.getElementById('sn'+i);
+    el.classList.remove('active','done');
+    if(i === n) el.classList.add('active');
+    else if(i < n) el.classList.add('done');
+  });
+
+  // Progress
+  document.getElementById('pf').style.width = ((n-1)/5*100)+'%';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ── Validation ──
+function validate(n) {
+  if(n === 1) {
+    if(!document.getElementById('f_nom_ent').value.trim()) { alert('Renseignez le nom de l\'entreprise.'); return false; }
+    if(!document.getElementById('f_nom').value.trim()) { alert('Renseignez votre nom.'); return false; }
+    if(!document.getElementById('f_raison').value) { alert('Indiquez la raison de la valorisation.'); return false; }
+    return true;
+  }
+  if(n === 2) {
+    if(!selectedSector) { alert('Sélectionnez votre secteur d\'activité.'); return false; }
+    return true;
+  }
+  if(n === 3) {
+    if(!document.getElementById('f_ca').value) { alert('Renseignez votre chiffre d\'affaires.'); return false; }
+    if(!document.getElementById('f_marge').value) { alert('Renseignez votre marge nette.'); return false; }
+    return true;
+  }
+  if(n === 4) {
+    const needed = ['marche','concurrence','protection','zone','dependance'];
+    for(const q of needed) {
+      if(!quals[q]) { alert('Répondez à toutes les questions qualitatives.'); return false; }
+    }
+    return true;
+  }
+  return true;
+}
+
+// ── Sector picker ──
+function pickSector(el) {
+  document.querySelectorAll('.sc').forEach(s => s.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedSector = { val: el.dataset.val, mult: parseFloat(el.dataset.mult) };
+}
+
+// ── Qual picker ──
+function pickQual(el) {
+  const q = el.dataset.q;
+  // Deselect others in same group
+  document.querySelectorAll(`.qo[data-q="${q}"]`).forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  quals[q] = parseFloat(el.dataset.v);
+}
+
+// ── Calcul (côté client uniquement pour log · Make refait tout) ──
+function calcValeur() {
+  const ca       = parseFloat(document.getElementById('f_ca').value)||0;
+  const marge    = parseFloat(document.getElementById('f_marge').value)||0;
+  const g        = (parseFloat(document.getElementById('f_croissance').value)||0)/100;
+  const capex    = parseFloat(document.getElementById('f_capex').value)||0;
+  const mult     = selectedSector ? selectedSector.mult : 1.0;
+
+  // Actifs
+  const actifs =
+    (parseFloat(document.getElementById('f_immo').value)||0) +
+    (parseFloat(document.getElementById('f_equip').value)||0) +
+    (parseFloat(document.getElementById('f_stocks').value)||0) +
+    (parseFloat(document.getElementById('f_treo').value)||0) +
+    (parseFloat(document.getElementById('f_creances').value)||0) +
+    (parseFloat(document.getElementById('f_autres_actifs').value)||0);
+
+  const dettes =
+    (parseFloat(document.getElementById('f_dettes_banc').value)||0) +
+    (parseFloat(document.getElementById('f_dettes_autres').value)||0);
+
+  // Méthode multiples
+  const valMult = ca * mult;
+
+  // Méthode DCF
+  const wacc = 0.08;
+  const rn = ca * (marge/100);
+  let van = 0, fcf = (rn - capex) * 0.9;
+  for(let i=1; i<=5; i++) {
+    fcf *= (1 + Math.min(g, 0.3));
+    van += fcf / Math.pow(1+wacc, i);
+  }
+  const gLT = Math.min(g, 0.03);
+  const vt = (fcf*(1+gLT)) / (wacc-gLT) / Math.pow(1+wacc,5);
+  const valDCF = Math.max(0, van + vt);
+
+  // Méthode patrimoniale
+  const valPatri = Math.max(0, actifs - dettes);
+
+  // Pondération (entreprise établie par défaut)
+  const base = valDCF*0.2 + valMult*0.5 + valPatri*0.3;
+
+  // Score qualitatif
+  const weights = {marche:.25, concurrence:.25, protection:.20, zone:.15, dependance:.15};
+  let score = 0;
+  Object.entries(weights).forEach(([k,w]) => { score += (quals[k]||1.0)*w; });
+
+  const final = base * score;
+  return { valDCF, valMult, valPatri, final, score };
+}
+
+// ── Submit ──
+function submit() {
+  const email = document.getElementById('f_email').value;
+  if(!email) { alert('Renseignez votre email.'); return; }
+
+  const v = calcValeur();
+
+  const payload = {
+    // Contexte
+    nom_entreprise: document.getElementById('f_nom_ent').value,
+    contact: document.getElementById('f_nom').value,
+    role: document.getElementById('f_role').value,
+    raison: document.getElementById('f_raison').value,
+    email, tel: document.getElementById('f_tel').value,
+    // Secteur
+    secteur: selectedSector ? selectedSector.val : '',
+    multiple_sectoriel: selectedSector ? selectedSector.mult : 1,
+    // Finances
+    ca: document.getElementById('f_ca').value,
+    croissance_pct: document.getElementById('f_croissance').value,
+    marge_nette_pct: document.getElementById('f_marge').value,
+    capex: document.getElementById('f_capex').value,
+    actif_immo: document.getElementById('f_immo').value,
+    actif_equip: document.getElementById('f_equip').value,
+    actif_stocks: document.getElementById('f_stocks').value,
+    actif_treo: document.getElementById('f_treo').value,
+    actif_creances: document.getElementById('f_creances').value,
+    actif_autres: document.getElementById('f_autres_actifs').value,
+    dettes_banc: document.getElementById('f_dettes_banc').value,
+    dettes_autres: document.getElementById('f_dettes_autres').value,
+    // Qualitatif
+    qual_marche: quals.marche||1,
+    qual_concurrence: quals.concurrence||1,
+    qual_protection: quals.protection||1,
+    qual_zone: quals.zone||1,
+    qual_dependance: quals.dependance||1,
+    score_quali: v.score.toFixed(3),
+    // Résultats calculés (Make peut recalculer ou utiliser directement)
+    val_dcf: Math.round(v.valDCF),
+    val_multiples: Math.round(v.valMult),
+    val_patrimoniale: Math.round(v.valPatri),
+    val_finale: Math.round(v.final),
+    val_low: Math.round(v.final * 0.85),
+    val_high: Math.round(v.final * 1.40),
+    date: new Date().toLocaleDateString('fr-FR'),
+    // Champs Notion
+    source: 'Valoris',
+    annee_creation: document.getElementById('f_annee_creation').value,
+    date_lead: new Date().toISOString().split('T')[0],
+    statut: 'Lead entrant'
+  };
+
+  console.log('Payload Make.com:', JSON.stringify(payload, null, 2));
+
+  // Envoi Make → Notion
+  fetch('https://hook.eu1.make.com/pr8bxloc9mwj0xxo25k63o3zfj1gf933', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(payload)
+  }).catch(function(e){ console.error('Make error:', e); });
+
+  // UI
+  document.getElementById('b5').classList.remove('on');
+  document.getElementById('sending').classList.add('on');
+  setTimeout(() => {
+    document.getElementById('sending').classList.remove('on');
+    document.getElementById('success').classList.add('on');
+    document.getElementById('pf').style.width = '100%';
+  }, 2500);
+}
+</script>
+<a href="https://wa.me/33744749245" target="_blank" style="position:fixed;bottom:2rem;right:2rem;z-index:400;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.35);" title="WhatsApp" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+</body>
+</html>

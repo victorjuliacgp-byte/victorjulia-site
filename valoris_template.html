@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+
+body { font-family:'DM Sans',sans-serif; font-size:9.5pt; line-height:1.6; color:#1a1a2e; background:white; }
+
+@page { size:A4; margin:0; }
+
+/* ── COVER ── */
+.cover {
+  width:210mm; height:297mm;
+  background:#0D1F3C;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center; padding:20mm;
+  position:relative; overflow:hidden;
+  page-break-after:always;
+}
+.cover-gold { width:60mm; height:2px; background:#C9A84C; margin:6mm auto 8mm; }
+.cover-title { font-family:'Cormorant Garamond',serif; font-size:36pt; font-weight:400; color:white; line-height:1.15; margin-bottom:6mm; }
+.cover-title em { font-style:italic; color:#C9A84C; }
+.cover-sector { font-size:10pt; color:rgba(143,168,212,.85); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:4mm; }
+.cover-raison { font-size:10pt; color:rgba(143,168,212,.7); font-style:italic; margin-bottom:28mm; }
+.cover-date { font-size:10pt; color:#C9A84C; margin-bottom:3mm; }
+.cover-by { font-size:9pt; color:rgba(107,114,133,.8); margin-bottom:2mm; }
+.cover-orias { font-size:8pt; color:rgba(74,85,104,.7); }
+.cover-nom { font-size:10pt; color:rgba(143,168,212,.85); margin-bottom:4mm; }
+.cover-footer { position:absolute; bottom:12mm; left:0; right:0; text-align:center; }
+
+/* ── SECTION WRAPPER ── */
+.section {
+  width:210mm;
+  height:297mm;
+  padding:18mm 16mm 16mm 16mm;
+  page-break-after:always;
+  position:relative;
+  overflow:hidden;
+  box-sizing:border-box;
+}
+.section:last-child { page-break-after:auto; height:auto; min-height:297mm; }
+
+/* ── SECTION HEADER BAR ── */
+.sbar {
+  position:absolute; top:0; left:0; right:0; height:13mm;
+  background:#0D1F3C;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 16mm; border-bottom:.6mm solid #C9A84C;
+}
+.sbar-left { font-size:8pt; font-weight:600; color:white; }
+.sbar-left span { display:block; font-size:7pt; font-weight:400; color:#C9A84C; }
+.sbar-right { font-size:8pt; font-weight:700; color:#C9A84C; text-align:right; }
+.sbar-right span { display:block; font-size:7pt; font-weight:400; color:#aaa; }
+
+/* ── SECTION FOOTER BAR ── */
+.sfoot {
+  position:absolute; bottom:0; left:0; right:0; height:11mm;
+  background:#EDE9E0; border-top:.5mm solid #C9A84C;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 16mm; font-size:6.5pt; color:#6b7285;
+}
+.sfoot-disc { font-style:italic; }
+.sfoot-page { font-weight:700; color:#0D1F3C; }
+
+/* ── CONTENT AREA ── */
+.content { padding-top:5mm; }
+
+/* ── TYPO ── */
+h1 { font-family:'Cormorant Garamond',serif; font-size:20pt; font-weight:600; color:#1a1a2e; line-height:1.2; margin-bottom:2mm; }
+h2 { font-size:12pt; font-weight:600; color:#0D1F3C; margin:5mm 0 3mm; }
+h3 { font-size:10pt; font-weight:600; color:#1a3260; margin:3mm 0 2mm; }
+p { margin-bottom:3mm; text-align:justify; }
+.uline { width:30%; height:2px; background:#0D1F3C; margin-bottom:5mm; }
+.gold-bar { width:20mm; height:3px; background:#C9A84C; margin-bottom:4mm; }
+.section-tag { font-size:7.5pt; font-weight:700; color:#C9A84C; letter-spacing:1.2px; text-transform:uppercase; display:block; margin-bottom:2px; }
+.gold-line { border:none; border-top:.5px solid #C9A84C; margin-bottom:3px; }
+
+/* ── ANALOGY ── */
+.analogy { background:#1a3260; border-left:4px solid #C9A84C; padding:10px 14px; margin:3mm 0; }
+.analogy-icon { font-size:15pt; margin-bottom:3px; }
+.analogy-title { font-size:8pt; font-weight:700; color:#C9A84C; letter-spacing:.8px; text-transform:uppercase; margin-bottom:4px; }
+.analogy p { font-size:9pt; color:rgba(255,255,255,.88); font-style:italic; text-align:left; line-height:1.5; margin:0; }
+.analogy strong { color:#e8c96a; }
+
+/* ── INSIGHT ── */
+.insight { background:rgba(13,31,60,0.07); border-left:4px solid #C9A84C; border-bottom:2px solid #0D1F3C; padding:9px 13px; margin:3mm 0; }
+.insight-title { font-size:8pt; font-weight:700; color:#0D1F3C; margin-bottom:3px; text-transform:uppercase; letter-spacing:.5px; }
+.insight p { font-size:9pt; color:#1a1a2e; font-style:italic; margin:0; text-align:justify; }
+
+/* ── EXPLAINER ── */
+.explainer { background:rgba(13,31,60,.04); border-left:3px solid rgba(13,31,60,.15); padding:7px 11px; margin:2mm 0; }
+.explainer p { color:#6b7285; font-size:9pt; font-style:italic; margin:0; }
+
+/* ── BULLETS ── */
+.bitem { display:flex; gap:5px; margin-bottom:4px; }
+.bdot { color:#0D1F3C; font-weight:700; font-size:11pt; line-height:1.3; flex-shrink:0; }
+.bcontent { flex:1; }
+
+/* ── RANGE ── */
+.range { display:flex; margin:3mm 0; }
+.range-low,.range-high { background:#0D1F3C; color:white; text-align:center; padding:10px 8px; flex:1; }
+.range-mid { background:#1a3260; color:#C9A84C; text-align:center; padding:10px 8px; flex:1.6; font-style:italic; font-size:9pt; display:flex; align-items:center; justify-content:center; }
+.range-val { font-weight:700; font-size:12pt; display:block; }
+.range-sub { font-size:7.5pt; color:#8fa8d4; }
+.validity { font-size:7.5pt; color:#6b7285; font-style:italic; text-align:right; margin-bottom:2mm; }
+
+/* ── TABLES ── */
+table { width:100%; border-collapse:collapse; font-size:9pt; margin:2mm 0; }
+thead tr { background:#0D1F3C; color:white; }
+thead th { padding:6px 9px; font-weight:600; font-size:8.5pt; text-align:left; }
+thead th.r { text-align:right; } thead th.c { text-align:center; }
+tbody tr:nth-child(odd) { background:#EDE9E0; }
+tbody tr:nth-child(even) { background:white; }
+tbody td { padding:6px 9px; border:.3px solid #e0d9cf; }
+tbody td.r { text-align:right; } tbody td.c { text-align:center; } tbody td.b { font-weight:600; }
+tbody td.green { font-weight:700; color:#1D6FA4; }
+tbody td.navy { font-weight:700; color:#0D1F3C; }
+tbody td.amber { font-weight:700; color:#8B6914; }
+tbody td.gold { font-weight:700; color:#C9A84C; }
+tbody td.teal { font-weight:700; color:#2E7D50; }
+tbody td.red { font-weight:700; color:#c0392b; }
+.tr-total td { background:#EDE9E0!important; border-top:1.5px solid #0D1F3C!important; font-weight:700; }
+.tr-pondee td { background:#1a3260!important; color:white; font-weight:700; }
+.tr-final td { background:#1a3260!important; color:white; font-weight:700; }
+.tr-final td.gold { color:#C9A84C!important; font-size:12pt; }
+
+/* ── QUALI ── */
+.qrow { display:flex; align-items:center; background:#EDE9E0; border-left:3px solid #2E7D50; margin-bottom:2px; padding:7px 9px; gap:8px; }
+.qrow.warn { border-left-color:#8B6914; }
+.qrow.great { border-left-color:#1D6FA4; }
+.qrow.bad { border-left-color:#c0392b; }
+.qname { font-weight:600; font-size:9.5pt; flex:1; }
+.qdesc { font-size:8pt; color:#6b7285; margin-top:1px; }
+.qscore { font-weight:700; font-size:13pt; color:#2E7D50; width:50px; text-align:center; flex-shrink:0; }
+.qrow.warn .qscore { color:#8B6914; }
+.qrow.great .qscore { color:#1D6FA4; }
+.qrow.bad .qscore { color:#c0392b; }
+.qverdict { font-size:8.5pt; font-style:italic; color:#2E7D50; flex:1; }
+.qrow.warn .qverdict { color:#8B6914; }
+.qrow.great .qverdict { color:#1D6FA4; }
+.qrow.bad .qverdict { color:#c0392b; }
+.qweight { font-size:8pt; color:#6b7285; margin-top:1px; }
+
+.sleg { display:flex; gap:3px; margin:2mm 0; }
+.sleg-item { flex:1; padding:5px 7px; text-align:center; }
+.sleg-val { font-size:10pt; font-weight:700; display:block; margin-bottom:1px; }
+.sleg-lbl { font-size:7.5pt; line-height:1.3; }
+
+.sbox { display:flex; align-items:center; background:#0D1F3C; padding:9px 13px; margin:2mm 0; gap:10px; }
+.sbox-label { font-size:9pt; font-weight:600; color:white; flex:1; }
+.sbox-num { font-size:17pt; font-weight:700; color:#C9A84C; text-align:center; width:70px; }
+.sbox-txt { font-size:9pt; color:#8fa8d4; font-style:italic; flex:1; }
+
+/* ── RESULT / CALC ── */
+.rbox { display:flex; background:#0D1F3C; margin:2mm 0; }
+.rbox-label { padding:11px 13px; font-size:9pt; font-weight:600; color:#C9A84C; display:flex; align-items:center; border-right:.3px solid #1a3260; flex:1; }
+.rbox-value { padding:11px; text-align:center; font-size:19pt; font-weight:700; color:white; font-family:'Cormorant Garamond',serif; display:flex; align-items:center; justify-content:center; flex:1.6; }
+.rbox-weight { padding:11px 13px; font-size:9pt; color:#8fa8d4; display:flex; align-items:center; justify-content:flex-end; border-left:.3px solid #1a3260; flex:1; }
+
+.calc { display:flex; background:#0D1F3C; padding:13px; margin:2mm 0; text-align:center; align-items:center; justify-content:center; gap:16px; }
+.calc-ca { font-size:14pt; font-weight:700; color:#C9A84C; }
+.calc-op { font-size:17pt; font-weight:700; color:white; }
+.calc-result { font-size:17pt; font-weight:700; color:white; font-family:'Cormorant Garamond',serif; }
+
+/* ── SECTOR ── */
+.sector-row { display:flex; justify-content:space-between; padding:5px 11px; border-bottom:.3px solid #e0d9cf; font-size:9pt; }
+.sector-row:nth-child(odd) { background:#EDE9E0; }
+.sector-row.cur { background:#0D1F3C; color:white; font-weight:600; }
+.sector-row.cur .mult { color:#C9A84C; }
+.mult { font-weight:700; color:#8B6914; }
+
+/* ── SYNTH ── */
+.sfinal { display:flex; background:#0D1F3C; margin:2mm 0; }
+.sfinal-label { padding:13px 15px; font-size:10pt; font-weight:600; color:white; display:flex; align-items:center; border-right:.5px solid rgba(201,168,76,.3); flex:1; }
+.sfinal-value { padding:13px 15px; font-family:'Cormorant Garamond',serif; font-size:24pt; font-weight:600; color:#C9A84C; display:flex; align-items:center; justify-content:flex-end; flex:1; }
+
+/* ── STEPS ── */
+.step { display:flex; gap:9px; align-items:flex-start; margin-bottom:4mm; }
+.step-num { background:#0D1F3C; color:#C9A84C; font-size:13pt; font-weight:700; text-align:center; padding:5px 0; border-radius:2px; width:34px; flex-shrink:0; line-height:1; }
+.step-title { font-weight:600; font-size:10pt; color:#1a3260; margin-bottom:2px; }
+.step-text { font-size:9pt; text-align:justify; }
+
+/* ── CONTACT ── */
+.ctact { display:flex; background:#0D1F3C; margin:3mm 0; }
+.ctact-left { padding:20px 18px; border-right:.5px solid rgba(201,168,76,.3); flex:1.2; }
+.ctact-right { padding:20px 18px; background:#1a3260; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; flex:1; }
+.ctact-name { font-size:12pt; font-weight:700; color:white; margin-bottom:2px; }
+.ctact-role { font-size:9pt; color:#C9A84C; margin-bottom:7mm; }
+.ctact-info { font-size:10pt; color:white; margin-bottom:2px; }
+.ctact-site { font-size:9pt; color:#8fa8d4; margin-bottom:5mm; }
+.ctact-orias { font-size:8pt; color:#6b7285; }
+.ctact-link { font-size:9pt; font-weight:700; color:#C9A84C; }
+.ctact-sub { font-size:8pt; color:#6b7285; font-style:italic; margin-top:3mm; }
+</style>
+</head>
+<body>
+
+<!-- ══ COUVERTURE ══ -->
+<div class="cover">
+  <div class="cover-title">Rapport<br><em>de valorisation</em></div>
+  <div class="cover-gold"></div>
+  <div class="cover-sector" id="cv-sector">Cabinets médicaux / Santé</div>
+  <div class="cover-raison" id="cv-raison">Cession partielle ou totale</div>
+  <div class="cover-date" id="cv-date">16 mars 2026</div>
+  <div class="cover-nom">Entreprise <strong style="color:white" id="cv-nom">Cabinet Dupont</strong></div>
+  <div class="cover-footer">
+    <div class="cover-by">Victor Julia · Conseiller en Gestion de Patrimoine</div>
+    <div class="cover-orias">ORIAS 25&#x202F;005&#x202F;899 · victorjulia.fr</div>
+  </div>
+</div>
+
+<!-- ══ INTRODUCTION ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr1">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">2</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Introduction</span>
+    <h1>1. Introduction</h1>
+    <div class="uline"></div>
+    <p>Ce rapport a été préparé spécifiquement pour <strong id="intro-nom">Cabinet Dupont</strong>, dans le cadre d'un projet de <strong id="intro-raison">cession partielle ou totale</strong>. Son objectif est simple : vous donner une vision claire et objective de ce que vaut votre entreprise aujourd'hui, avec les hypothèses et raisonnements qui conduisent à ce chiffre.</p>
+    <p>Pour cela, nous avons mobilisé <strong>quatre approches complémentaires</strong>, chacune répondant à une question différente :</p>
+    <div class="bitem"><span class="bdot">•</span><div class="bcontent"><strong>L'Analyse qualitative</strong> : "Quels sont les forces et risques non visibles dans les chiffres ?"</div></div>
+    <div class="bitem"><span class="bdot">•</span><div class="bcontent"><strong>La méthode DCF</strong> : "Combien d'argent cette entreprise va-t-elle générer dans les années à venir ?"</div></div>
+    <div class="bitem"><span class="bdot">•</span><div class="bcontent"><strong>La méthode des Multiples</strong> : "Combien ont payé des acheteurs pour des entreprises similaires récemment ?"</div></div>
+    <div class="bitem"><span class="bdot">•</span><div class="bcontent"><strong>La méthode Patrimoniale</strong> : "Si on vendait tout et remboursait toutes les dettes, que resterait-il ?"</div></div>
+    <p style="margin-top:3mm">Ces quatre réponses sont ensuite combinées et pondérées selon le profil de l'entreprise pour aboutir à une fourchette et une valeur centrale.</p>
+  </div>
+</div>
+
+<!-- ══ RÉSUMÉ ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr2">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">3</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Résumé</span>
+    <h1>2. Résumé</h1>
+    <div class="uline"></div>
+    <p>L'entreprise <strong id="res-nom">Cabinet Dupont</strong> est active dans le secteur <strong id="res-secteur">Cabinets médicaux / Santé</strong>. Après analyse approfondie, nous estimons la valeur entre <strong id="res-low">388&#x202F;695&#x202F;€</strong> et <strong id="res-high">647&#x202F;825&#x202F;€</strong>.</p>
+    <div class="range">
+      <div class="range-low"><span class="range-val" id="r-low">388&#x202F;695&#x202F;€</span><span class="range-sub">Estimation basse</span></div>
+      <div class="range-mid" id="r-mid">Valeur estimée de Cabinet Dupont →</div>
+      <div class="range-high"><span class="range-val" id="r-high">647&#x202F;825&#x202F;€</span><span class="range-sub">Estimation haute</span></div>
+    </div>
+    <div class="validity" id="validity-date">Valorisation établie le 16 mars 2026 · Validité indicative : 6 mois</div>
+    <div class="explainer"><p>Pourquoi une fourchette ? Parce que la valeur d'une entreprise dépend du contexte : qui achète, dans quel but, selon quelle méthode. La valeur centrale, <strong id="res-finale-inline">461&#x202F;251&#x202F;€</strong>, est l'estimation la plus probable, obtenue en combinant les quatre approches.</p></div>
+    <h2>Points clés de l'analyse</h2>
+    <div class="gold-bar"></div>
+    <div class="bitem"><span class="bdot">•</span><div class="bcontent"><strong>Perspectives de croissance :</strong> <span id="kp-croissance">L'entreprise présente des perspectives positives justifiant une valorisation en phase avec les opportunités exploitées.</span></div></div>
+    <div class="bitem" style="margin-top:3px"><span class="bdot">•</span><div class="bcontent"><strong>Dépendance au propriétaire :</strong> <span id="kp-dependance">Des signes de délégation efficace rassurent un acheteur potentiel sur la continuité de l'activité.</span></div></div>
+    <div class="bitem" style="margin-top:3px"><span class="bdot">•</span><div class="bcontent"><strong>Protection du savoir-faire :</strong> <span id="kp-protection">Axe d'amélioration identifié — chaque levier activé peut faire progresser la valorisation de façon mesurable.</span></div></div>
+    <p style="margin-top:3mm">La valorisation finale ajustée se situe autour de <strong id="res-finale">461&#x202F;251&#x202F;€</strong>, reflétant les performances financières, les perspectives de croissance et les facteurs qualitatifs de l'entreprise.</p>
+  </div>
+</div>
+
+<!-- ══ QUALITATIVE ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr3">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">4</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Méthodologie</span>
+    <h1>3. Méthodologie</h1>
+    <div class="uline"></div>
+    <h2>3.1 Analyse Qualitative</h2>
+    <div class="analogy">
+      <div class="analogy-icon">🔍</div>
+      <div class="analogy-title">En clair</div>
+      <p>Imaginez deux restaurants avec le même CA. L'un dépend entièrement de son chef-propriétaire, sans recette écrite ni équipe formée. L'autre tourne parfaitement en son absence. <strong>Le deuxième vaut bien plus</strong>, à chiffres identiques. L'analyse qualitative capte exactement cette différence.</p>
+    </div>
+    <p style="margin-top:2mm">Nous évaluons <strong>8 critères</strong>, chacun noté et pondéré :</p>
+    <div class="sleg">
+      <div class="sleg-item" style="background:rgba(46,125,80,.1);border-left:3px solid #2E7D50"><span class="sleg-val" style="color:#2E7D50">≥ 1.1</span><span class="sleg-lbl" style="color:#2E7D50">Très favorable</span></div>
+      <div class="sleg-item" style="background:rgba(29,111,164,.08);border-left:3px solid #1D6FA4"><span class="sleg-val" style="color:#1D6FA4">1.0</span><span class="sleg-lbl" style="color:#1D6FA4">Favorable</span></div>
+      <div class="sleg-item" style="background:rgba(139,105,20,.08);border-left:3px solid #8B6914"><span class="sleg-val" style="color:#8B6914">0.8</span><span class="sleg-lbl" style="color:#8B6914">Neutre</span></div>
+      <div class="sleg-item" style="background:rgba(192,57,43,.07);border-left:3px solid #c0392b"><span class="sleg-val" style="color:#c0392b">≤ 0.7</span><span class="sleg-lbl" style="color:#c0392b">À renforcer</span></div>
+    </div>
+    <div id="quali-rows">
+      <div class="qrow"><div class="qname">Taille du marché<div class="qdesc">Étendue et potentiel du marché cible</div></div><div class="qscore">1.00</div><div><div class="qverdict">Favorable</div><div class="qweight">Poids : 30 %</div></div></div>
+      <div class="qrow warn"><div class="qname">Concurrence<div class="qdesc">Niveau de compétition, capacité à se différencier</div></div><div class="qscore">0.75</div><div><div class="qverdict">À renforcer</div><div class="qweight">Poids : 15 %</div></div></div>
+      <div class="qrow"><div class="qname">Dépendance au propriétaire<div class="qdesc">L'entreprise fonctionne-t-elle sans le dirigeant ?</div></div><div class="qscore">1.00</div><div><div class="qverdict">Favorable</div><div class="qweight">Poids : 25 %</div></div></div>
+      <div class="qrow warn"><div class="qname">Protection du produit<div class="qdesc">Brevets, marques, barrières à l'entrée</div></div><div class="qscore">0.75</div><div><div class="qverdict">À renforcer</div><div class="qweight">Poids : 10 %</div></div></div>
+      <div class="qrow great"><div class="qname">Partenariats stratégiques<div class="qdesc">Alliances, réseau, collaborations clés</div></div><div class="qscore">1.20</div><div><div class="qverdict">Très favorable</div><div class="qweight">Poids : 5 %</div></div></div>
+      <div class="qrow warn"><div class="qname">Financement requis<div class="qdesc">Besoins en capitaux pour la croissance</div></div><div class="qscore">0.80</div><div><div class="qverdict">Neutre</div><div class="qweight">Poids : 5 %</div></div></div>
+      <div class="qrow warn"><div class="qname">Zone de clientèle<div class="qdesc">Étendue géographique de la base clients</div></div><div class="qscore">0.80</div><div><div class="qverdict">Neutre</div><div class="qweight">Poids : 5 %</div></div></div>
+      <div class="qrow great"><div class="qname">Politique de prix<div class="qdesc">Flexibilité et compétitivité tarifaire</div></div><div class="qscore">1.25</div><div><div class="qverdict">Très favorable</div><div class="qweight">Poids : 5 %</div></div></div>
+    </div>
+    <div class="sbox" style="margin-top:3mm">
+      <div class="sbox-label">Score global qualitatif</div>
+      <div class="sbox-num" id="score-num">0.89</div>
+      <div class="sbox-txt" id="score-txt">Légèrement en dessous de la moyenne</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Ce que ça veut dire pour vous</div>
+      <p id="txt-quali">Avec un score de 0.89, les aspects non financiers pèsent légèrement sur la valorisation. Identifier les deux ou trois critères les plus impactants et les travailler avant une cession peut faire une différence significative.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DCF ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr4">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">5</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Méthodologie</span>
+    <h2>3.2 Méthode DCF (Discounted Cash Flow)</h2>
+    <div class="analogy">
+      <div class="analogy-icon">☕</div>
+      <div class="analogy-title">En clair : l'analogie de la machine à café</div>
+      <p>Imaginez une machine à café qui produit <strong id="dcf-fcf-ex">24&#x202F;000&#x202F;€ de bénéfices nets par an</strong>. Combien vaut-elle aujourd'hui ? Pas le total sur 5 ans, parce que cet argent futur vaut moins qu'aujourd'hui (risque, inflation, coût du capital). On "actualise" ces flux futurs. <strong>C'est exactement le principe du DCF.</strong></p>
+    </div>
+    <p style="margin-top:2mm">CA de <strong id="dcf-ca">350&#x202F;000&#x202F;€</strong>, marge nette <strong id="dcf-marge">12 %</strong>, croissance <strong id="dcf-g">5 %</strong>/an. Taux d'actualisation : <strong>8 %</strong>.</p>
+    <table>
+      <thead><tr><th>Année</th><th class="r">CA projeté</th><th class="r">Résultat net</th><th class="r">Capex</th><th class="r">FCF</th><th class="r">Valeur actualisée</th></tr></thead>
+      <tbody>
+        <tr><td>N+1</td><td class="r" id="ca1">367&#x202F;500&#x202F;€</td><td class="r" id="rn1">44&#x202F;100&#x202F;€</td><td class="r" id="cx1">20&#x202F;000&#x202F;€</td><td class="r" id="fcf1">24&#x202F;100&#x202F;€</td><td class="r green" id="d1">22&#x202F;315&#x202F;€</td></tr>
+        <tr><td>N+2</td><td class="r" id="ca2">385&#x202F;875&#x202F;€</td><td class="r" id="rn2">46&#x202F;305&#x202F;€</td><td class="r" id="cx2">20&#x202F;000&#x202F;€</td><td class="r" id="fcf2">26&#x202F;305&#x202F;€</td><td class="r green" id="d2">22&#x202F;546&#x202F;€</td></tr>
+        <tr><td>N+3</td><td class="r" id="ca3">405&#x202F;169&#x202F;€</td><td class="r" id="rn3">48&#x202F;620&#x202F;€</td><td class="r" id="cx3">20&#x202F;000&#x202F;€</td><td class="r" id="fcf3">28&#x202F;620&#x202F;€</td><td class="r green" id="d3">22&#x202F;721&#x202F;€</td></tr>
+      </tbody>
+    </table>
+    <div class="rbox">
+      <div class="rbox-label">Valeur DCF</div>
+      <div class="rbox-value" id="rbox-dcf">280&#x202F;000&#x202F;€</div>
+      <div class="rbox-weight">Poids : <span id="pond-dcf-lbl">20</span> %</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Ce que ça veut dire pour vous</div>
+      <p id="txt-dcf">Selon cette méthode, votre entreprise vaut 280&#x202F;000&#x202F;€. Ce chiffre valorise votre potentiel futur. Une amélioration du taux de croissance ou de la marge nette augmenterait significativement cette valeur.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MULTIPLES ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr5">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">6</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Méthodologie</span>
+    <h2>3.3 Méthode des Multiples sectoriels</h2>
+    <div class="analogy">
+      <div class="analogy-icon">🏡</div>
+      <div class="analogy-title">En clair : l'analogie de l'immobilier</div>
+      <p>Pour estimer le prix d'un appartement, l'agent immobilier regarde à quel prix des appartements similaires ont été vendus dans le quartier. <strong>C'est exactement le même principe ici.</strong> On regarde ce que des acheteurs ont réellement payé pour des entreprises comparables et on applique ce ratio à votre chiffre d'affaires.</p>
+    </div>
+    <p style="margin-top:2mm">Dans le secteur <strong id="mult-secteur">Cabinets médicaux / Santé</strong>, multiple de <strong id="mult-val">0.9×</strong> le CA annuel.</p>
+    <div class="calc">
+      <div class="calc-ca" id="calc-ca">350&#x202F;000&#x202F;€</div>
+      <div class="calc-op" id="calc-mult">× 0.9</div>
+      <div class="calc-op">=</div>
+      <div class="calc-result" id="calc-result">420&#x202F;000&#x202F;€</div>
+    </div>
+    <h3 style="margin-top:3mm">Comparatif des multiples par secteur</h3>
+    <p style="color:#6b7285;font-size:9pt;font-style:italic;margin-bottom:2mm">Le multiple varie fortement selon le secteur. La Tech est valorisée 3× son CA car la scalabilité est quasi illimitée. La restauration à 0.6× car les marges sont faibles et l'activité très dépendante du dirigeant.</p>
+    <div style="border:.3px solid #e0d9cf">
+      <div class="sector-row"><span>Tech / SaaS</span><span class="mult">3.0×</span></div>
+      <div class="sector-row cur"><span id="sect-cur">▶ Cabinets médicaux / Santé</span><span class="mult" id="sect-mult">0.9×</span></div>
+      <div class="sector-row"><span>Services aux entreprises</span><span class="mult">1.1×</span></div>
+      <div class="sector-row"><span>Professions libérales</span><span class="mult">1.0×</span></div>
+      <div class="sector-row"><span>Commerce / distribution</span><span class="mult">0.7×</span></div>
+      <div class="sector-row"><span>Artisanat / BTP</span><span class="mult">0.65×</span></div>
+      <div class="sector-row"><span>Restauration / CHR</span><span class="mult">0.6×</span></div>
+    </div>
+    <div class="insight" style="margin-top:3mm">
+      <div class="insight-title">Ce que ça veut dire pour vous</div>
+      <p id="txt-mult">Selon cette méthode, votre entreprise vaut 420&#x202F;000&#x202F;€. C'est la référence de départ la plus utilisée dans les négociations réelles : un acheteur raisonnera d'abord en multiple de CA.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PATRIMONIALE ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr6">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">7</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Méthodologie</span>
+    <h2>3.4 Méthode d'Évaluation Patrimoniale</h2>
+    <div class="analogy">
+      <div class="analogy-icon">🏦</div>
+      <div class="analogy-title">En clair : la valeur de liquidation</div>
+      <p>Imaginez que vous fermiez l'entreprise demain. Vous vendez tout ce qu'elle possède, vous remboursez toutes ses dettes, et vous regardez ce qu'il reste. <strong>C'est la valeur patrimoniale.</strong> C'est la valeur plancher : en dessous de ce chiffre, aucun vendeur sensé ne devrait accepter de vendre.</p>
+    </div>
+    <table style="margin-top:3mm">
+      <thead><tr><th>Actifs</th><th class="r">Valeur</th></tr></thead>
+      <tbody>
+        <tr><td>Actifs immobiliers</td><td class="r" id="p-immo">1&#x202F;300&#x202F;000&#x202F;€</td></tr>
+        <tr><td>Équipements et machines</td><td class="r" id="p-equip">500&#x202F;000&#x202F;€</td></tr>
+        <tr><td>Stocks</td><td class="r" id="p-stocks">20&#x202F;000&#x202F;€</td></tr>
+        <tr><td>Trésorerie disponible</td><td class="r" id="p-treo">200&#x202F;000&#x202F;€</td></tr>
+        <tr><td>Créances clients</td><td class="r" id="p-creances">20&#x202F;000&#x202F;€</td></tr>
+        <tr class="tr-total"><td class="b">Total actifs</td><td class="r teal" id="p-actif-total">2&#x202F;040&#x202F;000&#x202F;€</td></tr>
+      </tbody>
+    </table>
+    <table style="margin-top:2mm">
+      <thead><tr><th>Passifs</th><th class="r">Montant</th></tr></thead>
+      <tbody>
+        <tr><td>Dettes bancaires</td><td class="r" id="p-dettes-banc">300&#x202F;000&#x202F;€</td></tr>
+        <tr><td>Autres dettes</td><td class="r" id="p-dettes-autres">50&#x202F;000&#x202F;€</td></tr>
+        <tr class="tr-total"><td class="b">Total dettes</td><td class="r red" id="p-dettes-total">350&#x202F;000&#x202F;€</td></tr>
+      </tbody>
+    </table>
+    <div style="background:#0D1F3C;color:white;padding:9px 13px;margin:2mm 0;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-weight:600;font-size:9pt">Valeur nette = Actifs − Dettes</span>
+      <span id="p-formule" style="font-size:9.5pt">2&#x202F;040&#x202F;000&#x202F;€ − 350&#x202F;000&#x202F;€ = <strong style="color:#C9A84C;font-size:11pt">1&#x202F;690&#x202F;000&#x202F;€</strong></span>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Ce que ça veut dire pour vous</div>
+      <p id="txt-patri">La valeur patrimoniale est de 1&#x202F;690&#x202F;000&#x202F;€. C'est la valeur plancher : en dessous de ce chiffre, aucun vendeur sensé ne devrait accepter. Elle influence la valorisation finale à hauteur de 30 %.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SYNTHÈSE ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr7">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">8</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Synthèse</span>
+    <h1>4. Synthèse</h1>
+    <div class="uline"></div>
+    <p>Les trois méthodes donnent des résultats différents, et c'est normal : chacune éclaire un angle différent. Nous les combinons avec des <strong>pondérations adaptées au stade de développement</strong> de l'entreprise.</p>
+    <div class="explainer"><p id="synth-mat">Cabinet Dupont est une entreprise établie (> 7 ans) : les pondérations appliquées sont DCF 20 % · Multiples 50 % · Patrimoniale 30 %.</p></div>
+    <table>
+      <thead><tr><th>Méthode</th><th class="r">Valeur</th><th class="c">Poids</th><th class="r">Contribution</th></tr></thead>
+      <tbody>
+        <tr><td class="green b">DCF</td><td class="r" id="s-dcf-v">280&#x202F;000&#x202F;€</td><td class="c" id="s-dcf-p">20 %</td><td class="r green" id="s-dcf-c">56&#x202F;000&#x202F;€</td></tr>
+        <tr><td class="navy b">Multiples</td><td class="r" id="s-mult-v">420&#x202F;000&#x202F;€</td><td class="c" id="s-mult-p">50 %</td><td class="r navy" id="s-mult-c">210&#x202F;000&#x202F;€</td></tr>
+        <tr><td class="amber b">Patrimoniale</td><td class="r" id="s-pat-v">1&#x202F;690&#x202F;000&#x202F;€</td><td class="c" id="s-pat-p">30 %</td><td class="r amber" id="s-pat-c">507&#x202F;000&#x202F;€</td></tr>
+        <tr class="tr-pondee"><td colspan="3" class="b">Valeur pondérée brute</td><td class="r b" id="s-pond">773&#x202F;000&#x202F;€</td></tr>
+        <tr class="tr-final"><td colspan="3" class="gold b" id="s-score-lbl">× Score qualitatif (0.89)</td><td class="r gold" id="s-finale">461&#x202F;251&#x202F;€</td></tr>
+      </tbody>
+    </table>
+    <div class="sfinal" style="margin-top:3mm">
+      <div class="sfinal-label">Valorisation finale ajustée</div>
+      <div class="sfinal-value" id="sfinal-val">461&#x202F;251&#x202F;€</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Ce que ça veut dire pour vous</div>
+      <p id="txt-synth">La valorisation de 461&#x202F;251&#x202F;€ est une estimation sérieuse basée sur vos données réelles. Lors d'une cession, la valeur négociée se situera dans la fourchette identifiée. Plus le dossier est préparé, plus vous approcherez le haut de la fourchette.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROCHAINES ÉTAPES + CONTACT ══ -->
+<div class="section">
+  <div class="sbar">
+    <div class="sbar-left">VICTOR JULIA CGP <span>Rapport de valorisation confidentiel</span></div>
+    <div class="sbar-right" id="hdr8">CABINET DUPONT <span>16 mars 2026</span></div>
+  </div>
+  <div class="sfoot">
+    <div class="sfoot-disc">Estimation indicative · Données déclaratives · Ne constitue pas un conseil en investissement · ORIAS 25&#x202F;005&#x202F;899</div>
+    <div class="sfoot-page">9</div>
+  </div>
+  <div class="content">
+    <hr class="gold-line"><span class="section-tag">Prochaines étapes</span>
+    <h1>5. Vos prochaines étapes</h1>
+    <div class="uline"></div>
+    <p>Dans le cadre d'un projet de <strong id="steps-raison">cession partielle ou totale</strong>, voici les actions prioritaires. Chacune a un impact direct et mesurable sur la valorisation finale négociée.</p>
+    <div style="margin:3mm 0">
+      <div class="step"><div class="step-num">1</div><div><div class="step-title">Préparer la documentation financière</div><div class="step-text">Rassembler bilans et liasses fiscales des 3 derniers exercices, contrats clients récurrents, indicateurs clés. Une documentation solide réduit le risque perçu par l'acheteur.</div></div></div>
+      <div class="step"><div class="step-num">2</div><div><div class="step-title">Renforcer l'autonomie de l'entreprise</div><div class="step-text">Formaliser les process clés, former l'équipe, documenter le savoir-faire. Une entreprise qui fonctionne sans son dirigeant se vend à un multiple plus élevé.</div></div></div>
+      <div class="step"><div class="step-num">3</div><div><div class="step-title">Optimiser la structure fiscale en amont</div><div class="step-text">L'article 150-0 B ter, l'apport-cession et d'autres mécanismes permettent de réduire significativement l'imposition sur la plus-value. À anticiper au moins 2 ans avant la vente.</div></div></div>
+      <div class="step"><div class="step-num">4</div><div><div class="step-title">Négocier la garantie d'actif et de passif</div><div class="step-text">Dans toute cession, l'acheteur demandera une GAP. Sa durée, son plafond et ses exclusions impactent directement le prix net perçu.</div></div></div>
+    </div>
+    <div class="ctact">
+      <div class="ctact-left">
+        <div class="ctact-name">Victor Julia</div>
+        <div class="ctact-role">Conseiller en Gestion de Patrimoine</div>
+        <div class="ctact-info">07&#x202F;44&#x202F;74&#x202F;92&#x202F;45</div>
+        <div class="ctact-site">victorjulia.fr</div>
+        <div class="ctact-orias">ORIAS 25&#x202F;005&#x202F;899 · Mandataire Capfinances SAS</div>
+      </div>
+      <div class="ctact-right">
+        <div class="ctact-cta">Discutons de ce rapport.</div>
+        <div style="font-size:8pt;color:#8fa8d4;margin-bottom:3mm">Réservez un créneau gratuit :</div>
+        <div class="ctact-link">cal.com/victor-julia/30min</div>
+        <div class="ctact-sub">Premier échange sans engagement.</div>
+      </div>
+    </div>
+    <hr style="border:none;border-top:.3px solid #d5cfc5;margin:3mm 0">
+    <p style="font-size:7.5pt;color:#6b7285;font-style:italic;text-align:justify;margin:0">Ce rapport est strictement confidentiel. Les estimations sont basées sur des données déclaratives et ont un caractère indicatif. Elles ne constituent pas une valorisation certifiée ni un conseil en investissement au sens de la directive MIF II. Victor Julia, mandataire Capfinances SAS, ORIAS n°&#x202F;25&#x202F;005&#x202F;899.</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(window.location.search);
+  var get=function(k,d){return p.get(k)||d;};
+  var num=function(k,d){return parseFloat(p.get(k))||d;};
+  var fmt=function(v){return Math.round(v).toLocaleString('fr-FR')+'\u202f\u20ac';};
+  var fmt2=function(v){return v.toLocaleString('fr-FR',{minimumFractionDigits:0,maximumFractionDigits:0})+'\u202f\u20ac';};
+  var set=function(id,v){var e=document.getElementById(id);if(e)e.innerHTML=v;};
+
+  var nom=get('nom_entreprise','Cabinet Dupont');
+  var secteur=get('secteur','Cabinets médicaux / Santé');
+  var raison_code=get('raison','vente');
+  var ca=num('ca',350000),g=num('croissance_pct',5)/100,marge=num('marge_nette_pct',12)/100,capex=num('capex',20000);
+  var vdcf=num('val_dcf',280000),vmult=num('val_multiples',420000),vpat=num('val_patrimoniale',1690000);
+  var vfin=num('val_finale',461251),vlow=num('val_low',388695),vhigh=num('val_high',647825);
+  var score=num('score_quali',0.89),mult=num('multiple_sectoriel',0.9);
+  var aimmo=num('actif_immo',1300000),aequip=num('actif_equip',500000),astocks=num('actif_stocks',20000);
+  var atreo=num('actif_treo',200000),acreances=num('actif_creances',20000);
+  var dbanc=num('dettes_banc',300000),dautres=num('dettes_autres',50000);
+  var annee=num('annee_creation',2010);
+
+  var rl={vente:'Cession partielle ou totale',obo:'Stratégie OBO',transmission:'Transmission familiale',levee:'Levée de fonds',curiosite:'Connaissance / curiosité',parts:'Évaluation de parts minoritaires',divorce:'Divorce / séparation'};
+  var raison=rl[raison_code]||'Valorisation';
+
+  var today=new Date();
+  var months=['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+  var date_fr=today.getDate()+' '+months[today.getMonth()]+' '+today.getFullYear();
+
+  var age=today.getFullYear()-annee;
+  var mat=age<3?'Jeune entreprise (< 3 ans)':age<=7?'En consolidation (3-7 ans)':'Entreprise établie (> 7 ans)';
+  var pond=age<3?[60,30,10]:age<=7?[40,40,20]:[20,50,30];
+
+  // Cover
+  set('cv-sector',secteur); set('cv-raison',raison); set('cv-date',date_fr); set('cv-nom',nom);
+  document.title='Rapport Valoris \u00b7 '+nom;
+
+  // Headers
+  var hdr='<span>'+date_fr+'</span>';
+  for(var i=1;i<=8;i++) set('hdr'+i,nom.toUpperCase()+' '+hdr);
+
+  // Intro
+  set('intro-nom',nom); set('intro-raison',raison.toLowerCase());
+
+  // Résumé
+  set('res-nom',nom); set('res-secteur',secteur);
+  set('res-low',fmt(vlow)); set('res-high',fmt(vhigh));
+  set('r-low',fmt(vlow)); set('r-high',fmt(vhigh));
+  set('r-mid','Valeur estimée de '+nom+' \u2192');
+  set('res-finale-inline',fmt(vfin)); set('res-finale',fmt(vfin));
+  set('validity-date','Valorisation établie le '+date_fr+' \u00b7 Validité indicative : 6 mois');
+
+  // Score quali
+  set('score-num',score.toFixed(2));
+  set('score-txt',score>=1.1?'Très favorable, booste la valeur':score>=1.0?'Favorable':score>=0.85?'Légèrement en dessous de la moyenne':'À renforcer en priorité');
+  var qi=score>=1.1?'Avec un score de <strong>'+score.toFixed(2)+'</strong>, les aspects non financiers renforcent la valorisation. Les points forts identifiés sont des arguments solides face à un acheteur.':score>=1.0?'Avec un score de <strong>'+score.toFixed(2)+'</strong>, les aspects non financiers sont favorables. Des améliorations ciblées pourraient encore faire progresser la valorisation.':score>=0.85?'Avec un score de <strong>'+score.toFixed(2)+'</strong>, les aspects non financiers pèsent légèrement sur la valorisation. Identifier les deux ou trois critères les plus impactants et les travailler avant une cession peut faire une différence significative.':'Avec un score de <strong>'+score.toFixed(2)+'</strong>, les aspects non financiers pèsent sur la valorisation. Travailler ces leviers avant une cession est fortement recommandé.';
+  set('txt-quali',qi);
+
+  // DCF
+  set('dcf-fcf-ex',fmt(ca*marge-capex)+' de bénéfices nets par an');
+  set('dcf-ca',fmt(ca)); set('dcf-marge',(marge*100).toFixed(1)+'\u202f%'); set('dcf-g',(g*100).toFixed(1)+'\u202f%');
+  set('rbox-dcf',fmt(vdcf)); set('pond-dcf-lbl',pond[0]);
+  [[ca*(1+g),1.08],[ca*(1+g)*(1+g),1.0816],[ca*(1+g)*(1+g)*(1+g),1.259712]].forEach(function(pr,i){
+    var n=i+1,rn=pr[0]*marge,fcf=rn-capex;
+    set('ca'+n,fmt(pr[0]));set('rn'+n,fmt(rn));set('cx'+n,fmt(capex));set('fcf'+n,fmt(fcf));set('d'+n,fmt(fcf/pr[1]));
+  });
+  var di='Selon cette méthode, votre entreprise vaut <strong>'+fmt(vdcf)+'</strong>. ';
+  di+=g>=0.08?'Votre taux de croissance élevé de <strong>'+(g*100).toFixed(1)+'\u202f%</strong> est un atout majeur dans cette méthode.':'Une amélioration du taux de croissance au-delà de <strong>'+(g*100).toFixed(1)+'\u202f%</strong> augmenterait significativement cette valeur.';
+  set('txt-dcf',di);
+
+  // Multiples
+  set('mult-secteur',secteur); set('mult-val',mult.toFixed(1)+'\u00d7');
+  set('calc-ca',fmt(ca)); set('calc-mult','\u00d7\u2002'+mult.toFixed(1)); set('calc-result',fmt(vmult));
+  set('sect-cur','\u25b6\u2002'+secteur); set('sect-mult',mult.toFixed(1)+'\u00d7');
+  var mi='Selon cette méthode, votre entreprise vaut <strong>'+fmt(vmult)+'</strong>. ';
+  mi+=mult>=1.5?'Votre secteur bénéficie d\'un multiple élevé, ce qui est favorable.':mult>=0.8?'Le multiple de <strong>'+mult.toFixed(1)+'×</strong> est dans la moyenne de votre secteur.':'Le multiple de <strong>'+mult.toFixed(1)+'×</strong> est caractéristique de secteurs à faibles marges.';
+  mi+=' C\'est la référence la plus utilisée dans les négociations réelles.';
+  set('txt-mult',mi);
+
+  // Patrimoniale
+  var at=aimmo+aequip+astocks+atreo+acreances,dt=dbanc+dautres;
+  set('p-immo',fmt2(aimmo));set('p-equip',fmt2(aequip));set('p-stocks',fmt2(astocks));
+  set('p-treo',fmt2(atreo));set('p-creances',fmt2(acreances));set('p-actif-total',fmt2(at));
+  set('p-dettes-banc',fmt2(dbanc));set('p-dettes-autres',fmt2(dautres));set('p-dettes-total',fmt2(dt));
+  set('p-formule',fmt2(at)+' \u2212 '+fmt2(dt)+' = <strong style="color:#C9A84C;font-size:11pt">'+fmt2(vpat)+'</strong>');
+  var ratio=vpat/vmult;
+  var pi=ratio>=2?'La valeur patrimoniale est nettement supérieure aux autres méthodes (<strong>'+fmt(vpat)+'</strong>), principalement grâce aux actifs immobiliers et équipements. Elle constitue un argument fort en négociation et influence la valorisation finale à hauteur de '+pond[2]+'\u202f%.':ratio>=0.8?'La valeur patrimoniale de <strong>'+fmt(vpat)+'</strong> est cohérente avec les autres méthodes. Elle confirme la solidité du bilan et constitue un plancher de négociation crédible ('+pond[2]+'\u202f% de la pondération finale).':'La valeur patrimoniale de <strong>'+fmt(vpat)+'</strong> est inférieure aux autres méthodes, ce qui est courant pour les entreprises dont la valeur repose sur le savoir-faire. Les méthodes DCF et Multiples sont ici les références principales.';
+  set('txt-patri',pi);
+
+  // Synthèse
+  var pd=pond[0],pm=pond[1],pp=pond[2];
+  var vpond=vdcf*pd/100+vmult*pm/100+vpat*pp/100;
+  set('synth-mat',nom+' est une <strong>'+mat.toLowerCase()+'</strong> : pondérations appliquées DCF '+pd+'\u202f% \u00b7 Multiples '+pm+'\u202f% \u00b7 Patrimoniale '+pp+'\u202f%.');
+  set('s-dcf-v',fmt(vdcf));set('s-dcf-p',pd+'\u202f%');set('s-dcf-c',fmt(vdcf*pd/100));
+  set('s-mult-v',fmt(vmult));set('s-mult-p',pm+'\u202f%');set('s-mult-c',fmt(vmult*pm/100));
+  set('s-pat-v',fmt(vpat));set('s-pat-p',pp+'\u202f%');set('s-pat-c',fmt(vpat*pp/100));
+  set('s-pond',fmt(vpond));
+  set('s-score-lbl','\u00d7\u2002Score qualitatif ('+score.toFixed(2)+')');
+  set('s-finale',fmt(vfin));set('sfinal-val',fmt(vfin));
+  var rs={vente:'Lors d\'une cession, la valeur négociée se situera dans la fourchette <strong>'+fmt(vlow)+'\u202f\u2013\u202f'+fmt(vhigh)+'</strong>. Plus le dossier est préparé (comptes audités, clientèle diversifiée, équipe autonome), plus vous approcherez le haut de la fourchette.',obo:'Dans le cadre d\'un OBO, cette valorisation de <strong>'+fmt(vfin)+'</strong> servira de base au montage financier. Le niveau d\'endettement acceptable dépendra directement de ce chiffre.',transmission:'Dans le cadre d\'une transmission, cette valorisation servira de référence pour la donation ou la vente aux héritiers. Une valorisation bien documentée limite les risques de redressement fiscal.',levee:'Dans le cadre d\'une levée de fonds, cette valorisation définit la valorisation pré-money et servira de base aux discussions avec les investisseurs.',curiosite:'Cette valorisation vous donne une photographie claire de la valeur actuelle. Elle est utile pour anticiper les décisions futures et identifier les leviers de création de valeur.',parts:'Pour une évaluation de parts minoritaires, cette valeur globale sera décotée pour tenir compte du manque de liquidité (généralement 20 à 30\u202f%).',divorce:'Dans le cadre d\'une procédure de séparation, cette valorisation servira de référence pour le partage des actifs professionnels.'};
+  set('txt-synth','La valorisation de <strong>'+fmt(vfin)+'</strong> est une estimation sérieuse basée sur vos données réelles. '+(rs[raison_code]||'Elle servira de base pour vos décisions stratégiques futures.'));
+
+  // Steps & contact
+  set('steps-raison',raison.toLowerCase());
+})();
+</script>
+</body>
+</html>
