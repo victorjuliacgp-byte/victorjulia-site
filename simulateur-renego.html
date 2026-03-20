@@ -495,7 +495,7 @@ input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 4px rgba(201,168,
       <div class="success-body">
         Victor étudie votre dossier et vous rappelle sous <strong style="color:var(--white)">24h ouvrées</strong> avec une analyse complète de votre situation.<br><br>
         Ou prenez directement rendez-vous : <a href="https://cal.com/victor-julia/30min" target="_blank" style="color:var(--gold)">cal.com/victor-julia →</a><br><br>
-        Découvrez aussi notre outil de valorisation : <a href="https://merry-puffpuff-ddc641.netlify.app/#wizvalue" style="color:var(--gold)">Valoris →</a>
+        Découvrez aussi notre outil de valorisation : <a href="https://victorjulia.fr/#wizvalue" style="color:var(--gold)">Valoris →</a>
       </div>
     </div>
   </div>
@@ -644,8 +644,6 @@ function submit(){
     eligible: document.getElementById('eligTxt').textContent
   };
   console.log('→ Make.com webhook payload:', JSON.stringify(payload, null, 2));
-  // fetch('https://hook.eu1.make.com/VOTRE_WEBHOOK', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload) });
-
   [1,2,3].forEach(i=>{ document.getElementById('s'+i).style.display='none'; });
   document.querySelector('.step-bar').style.display='none';
   // Envoi Make → Notion
