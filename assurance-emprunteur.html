@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Assurance Emprunteur · Victor Julia CGP</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold:#C9A84C; --gold-light:#e8c96a;
+  --navy:#0D1F3C; --navy-mid:#1a3260;
+  --night:#14142B; --night-mid:#2d2d4e;
+  --violet:#534AB7;
+  --cream:#F8F5EF; --white:#fff;
+  --muted:#6b7285; --border:rgba(26,26,46,.09);
+  --ok:#1D9E75; --warn:#C9A84C; --ko:#c0392b;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{overflow-x:hidden;max-width:100%;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--night);min-height:100vh;display:flex;flex-direction:column;}
+
+/* TOPBAR */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.9rem 3rem;border-bottom:1px solid rgba(255,255,255,.06);}
+.topbar-logo{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--white);text-decoration:none;display:flex;align-items:center;gap:.5rem;opacity:.7;}
+.topbar-logo span{width:5px;height:5px;border-radius:50%;background:var(--gold);display:inline-block;}
+.topbar-back{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);text-decoration:none;transition:color .2s;}
+.topbar-back:hover{color:rgba(255,255,255,.7);}
+
+/* HERO */
+.hero-strip{background:linear-gradient(135deg,var(--navy) 0%,var(--night) 100%);padding:4rem 3rem 3rem;text-align:center;border-bottom:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;}
+.hero-strip::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;border:1px solid rgba(201,168,76,.08);
+  pointer-events:none;
+}
+.hero-strip::after{content:'';position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;border:1px solid rgba(201,168,76,.06);
+  pointer-events:none;
+}
+.hs-tag{display:inline-block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.3);padding:.25rem .85rem;border-radius:2px;margin-bottom:1.2rem;}
+.hs-title{font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:var(--white);line-height:1.2;margin-bottom:.8rem;position:relative;z-index:1;}
+.hs-title em{font-style:italic;color:var(--gold);}
+.hs-sub{font-size:.88rem;color:rgba(255,255,255,.45);max-width:500px;margin:0 auto;line-height:1.75;position:relative;z-index:1;}
+
+/* MAIN */
+.main{flex:1;display:grid;grid-template-columns:1fr 360px;max-width:1060px;margin:0 auto;width:100%;padding:3rem;gap:0;}
+
+/* FORM PANEL */
+.form-panel{padding-right:3rem;}
+.step-bar{display:flex;gap:.35rem;margin-bottom:2.5rem;}
+.sb{height:2px;flex:1;border-radius:1px;background:rgba(255,255,255,.1);transition:background .4s;}
+.sb.on{background:var(--gold);}
+.step{display:none;}
+.step.on{display:block;}
+.step-lbl{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.4rem;}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--white);margin-bottom:.3rem;font-weight:400;}
+.step-hint{font-size:.78rem;color:rgba(255,255,255,.35);margin-bottom:2rem;line-height:1.65;}
+
+/* TYPE CARDS */
+.type-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1.5rem;}
+.tc{border:1px solid rgba(255,255,255,.1);border-radius:4px;padding:1.2rem 1rem;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.03);position:relative;}
+.tc:hover{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.05);}
+.tc.sel{border-color:var(--gold);background:rgba(201,168,76,.08);}
+.tc.sel::after{content:'✓';position:absolute;top:.5rem;right:.7rem;font-size:.75rem;color:var(--gold);
+  pointer-events:none;
+}
+.tc-icon{font-size:1.3rem;margin-bottom:.5rem;}
+.tc-label{font-size:.85rem;font-weight:500;color:var(--white);margin-bottom:.2rem;}
+.tc-desc{font-size:.72rem;color:rgba(255,255,255,.4);line-height:1.4;}
+
+/* INPUTS */
+.fg{margin-bottom:1.4rem;}
+.fg label{display:flex;justify-content:space-between;align-items:baseline;font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:.6rem;}
+.fg label .val{font-size:.85rem;font-weight:500;color:var(--gold);letter-spacing:0;text-transform:none;}
+input[type=range]{-webkit-appearance:none;width:100%;height:3px;background:rgba(255,255,255,.1);border-radius:2px;outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:2px solid var(--night);box-shadow:0 0 0 2px rgba(201,168,76,.3);transition:box-shadow .2s;}
+input[type=range]::-webkit-slider-thumb:hover{box-shadow:0 0 0 4px rgba(201,168,76,.2);}
+.range-ticks{display:flex;justify-content:space-between;margin-top:.4rem;}
+.range-ticks span{font-size:.62rem;color:rgba(255,255,255,.2);}
+.fg input[type=text],.fg input[type=email],.fg input[type=tel],.fg select{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:3px;padding:.75rem 1rem;color:var(--white);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;-webkit-appearance:none;}
+.fg select option{background:var(--navy-mid);}
+.fg input:focus,.fg select:focus{border-color:rgba(201,168,76,.5);}
+.fg input::placeholder{color:rgba(255,255,255,.2);}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+
+/* TOGGLE */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:3px;padding:.9rem 1.2rem;margin-bottom:1.5rem;}
+.toggle-label{font-size:.85rem;color:rgba(255,255,255,.65);}
+.toggle-label small{display:block;font-size:.72rem;color:rgba(255,255,255,.3);margin-top:.15rem;}
+.toggle-switch{position:relative;width:36px;height:20px;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:10px;cursor:pointer;transition:background .3s;
+  pointer-events: none;
+}
+.toggle-track::before{content:'';position:absolute;width:14px;height:14px;border-radius:50%;top:3px;left:3px;background:rgba(255,255,255,.5);transition:transform .3s;
+  pointer-events:none;
+}
+.toggle-switch input:checked + .toggle-track{background:var(--violet);}
+.toggle-switch input:checked + .toggle-track::before{transform:translateX(16px);background:var(--white);}
+
+/* INLINE INFO */
+.inline-info{background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.15);border-radius:3px;padding:.85rem 1rem;margin-bottom:1.2rem;font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.65;}
+.inline-info strong{color:rgba(255,255,255,.8);}
+
+/* NAV */
+.fnav{display:flex;justify-content:space-between;align-items:center;margin-top:2rem;}
+.btn-next,.btn-check{background:var(--gold);color:var(--navy);padding:.8rem 2rem;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:background .2s;}
+.btn-next:hover,.btn-check:hover{background:var(--gold-light);}
+.btn-back{background:transparent;color:rgba(255,255,255,.3);border:none;cursor:pointer;font-size:.78rem;font-family:'DM Sans',sans-serif;letter-spacing:.06em;transition:color .2s;}
+.btn-back:hover{color:rgba(255,255,255,.7);}
+
+/* SUCCESS */
+.success-box{display:none;padding:3rem 1rem;text-align:center;}
+.success-box.show{display:block;}
+.success-check{width:56px;height:56px;border-radius:50%;background:rgba(29,158,117,.15);border:1px solid rgba(29,158,117,.4);display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:1.3rem;}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:var(--white);margin-bottom:.6rem;}
+.success-body{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.8;max-width:360px;margin:0 auto;}
+.success-body a{color:var(--gold);}
+
+/* SIDEBAR */
+.sidebar{border-left:1px solid rgba(255,255,255,.07);padding-left:3rem;display:flex;flex-direction:column;gap:1.5rem;}
+
+/* ELIG CARD */
+.elig-card{border-radius:4px;padding:1.5rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);transition:all .4s;}
+.elig-card.ok{border-color:rgba(29,158,117,.4);background:rgba(29,158,117,.06);}
+.elig-card.warn{border-color:rgba(201,168,76,.4);background:rgba(201,168,76,.06);}
+.elig-card.ko{border-color:rgba(192,57,43,.3);background:rgba(192,57,43,.05);}
+.elig-status{display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem;}
+.elig-dot{width:8px;height:8px;min-width:8px;border-radius:50%;background:rgba(255,255,255,.15);transition:background .4s;}
+.elig-card.ok .elig-dot{background:var(--ok);}
+.elig-card.warn .elig-dot{background:var(--warn);}
+.elig-card.ko .elig-dot{background:var(--ko);}
+.elig-status-txt{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.elig-card.ok .elig-status-txt{color:var(--ok);}
+.elig-card.warn .elig-status-txt{color:var(--warn);}
+.elig-card.ko .elig-status-txt{color:rgba(255,100,80,.8);}
+.elig-title{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--white);margin-bottom:.4rem;}
+.elig-body{font-size:.77rem;color:rgba(255,255,255,.42);line-height:1.65;}
+.crit-list{display:flex;flex-direction:column;gap:.55rem;margin-top:.9rem;}
+.crit{display:flex;align-items:center;gap:.65rem;font-size:.76rem;color:rgba(255,255,255,.35);}
+.crit.met{color:rgba(255,255,255,.65);}
+.crit.ko-c{color:rgba(255,100,80,.6);}
+.crit-i{width:14px;text-align:center;flex-shrink:0;font-size:.7rem;}
+.crit.met .crit-i{color:var(--ok);}
+.crit.ko-c .crit-i{color:var(--ko);}
+
+/* RECAP */
+.info-box{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:1.2rem;}
+.ib-title{font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:.8rem;}
+.ib-row{display:flex;justify-content:space-between;align-items:baseline;padding:.38rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
+.ib-row:last-child{border-bottom:none;}
+.ib-lbl{font-size:.74rem;color:rgba(255,255,255,.35);}
+.ib-val{font-size:.82rem;color:var(--white);}
+
+/* LEMOINE */
+.lemoine{background:rgba(83,74,183,.1);border:1px solid rgba(83,74,183,.2);border-radius:4px;padding:1rem 1.2rem;display:flex;gap:.8rem;align-items:flex-start;}
+.lemoine-icon{font-size:.9rem;flex-shrink:0;margin-top:.1rem;}
+.lemoine-txt{font-size:.74rem;color:rgba(255,255,255,.45);line-height:1.65;}
+.lemoine-txt strong{color:rgba(255,255,255,.75);}
+
+/* RESPONSIVE */
+@media(max-width:800px){
+  .main{grid-template-columns:1fr;padding:2rem;}
+  .form-panel{padding-right:0;}
+  .sidebar{border-left:none;border-top:1px solid rgba(255,255,255,.07);padding-left:0;padding-top:2rem;}
+  .topbar{padding:.9rem 1.5rem;}
+  .hero-strip{padding:3rem 1.5rem 2rem;}
+}
+</style>
+
+<style id="shared-nav-css">
+:root {
+  --gold:#C9A84C; --gold-light:#e8c96a;
+  --navy:#0D1F3C; --navy-mid:#1a3260;
+  --cream:#F8F5EF; --white:#fff;
+  --forest:#0A3D35; --night:#14142B;
+  --muted:#6b7285; --border:rgba(26,26,46,.09);
+}
+.snav {
+  position:fixed; top:0; left:0; right:0; z-index:500;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:.9rem 3rem;
+  background:rgba(13,31,60,.95);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  font-family:'DM Sans',sans-serif;
+}
+.snav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem; color:var(--white); text-decoration:none;
+  display:flex; align-items:center; gap:.5rem;
+}
+.snav-logo-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); display:inline-block; }
+.snav-links { display:flex; gap:0; list-style:none; align-items:center; }
+.snav-links li { position:relative; }
+.snav-links a {
+  font-size:.75rem; letter-spacing:.07em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); text-decoration:none;
+  padding:.5rem .9rem; display:block; transition:color .2s;
+}
+.snav-links a:hover { color:var(--white); }
+.snav-links .active-page > a { color:var(--gold); }
+
+/* Dropdown */
+.snav-drop { position:relative; }
+.snav-drop-trigger {
+  display:flex; align-items:center; gap:.3rem; cursor:pointer;
+  font-size:.75rem; letter-spacing:.07em; text-transform:uppercase;
+  color:rgba(255,255,255,.55); padding:.5rem .9rem;
+  transition:color .2s; background:none; border:none;
+  font-family:'DM Sans',sans-serif;
+}
+.snav-drop-trigger:hover { color:var(--white); }
+.snav-drop-trigger .arr { font-size:.55rem; transition:transform .2s; }
+.snav-drop:hover .arr { transform:rotate(180deg); }
+.snav-drop-menu {
+  display:block;
+  position:absolute; top:calc(100% + .3rem); left:50%;
+  transform:translateX(-50%) translateY(-4px);
+  background:var(--navy-mid); border:1px solid rgba(255,255,255,.1);
+  border-radius:4px; min-width:220px;
+  box-shadow:0 12px 40px rgba(0,0,0,.4);
+  overflow:hidden; z-index:600;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .25s ease, transform .25s ease;
+}
+.snav-drop-menu.open {
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.snav-drop-menu::before {
+  content:'';
+  position:absolute;
+  top:-12px; left:0; right:0;
+  height:12px;
+  pointer-events:auto;
+}
+.snav-drop::after { content:''; position:absolute; top:100%; left:0; right:0; height:.8rem; 
+  pointer-events: none;
+}
+.snav-drop-menu a {
+  display:flex; align-items:center; gap:.7rem;
+  padding:.85rem 1.2rem; font-size:.78rem; letter-spacing:.04em;
+  text-transform:none; color:rgba(255,255,255,.65);
+  text-decoration:none; border-bottom:1px solid rgba(255,255,255,.06);
+  transition:background .15s, color .15s;
+}
+.snav-drop-menu a:last-child { border-bottom:none; }
+.snav-drop-menu a:hover { background:rgba(255,255,255,.06); color:var(--white); }
+.snav-drop-menu .dm-tag {
+  font-size:.6rem; letter-spacing:.08em; text-transform:uppercase;
+  padding:.15rem .45rem; border-radius:2px; flex-shrink:0;
+}
+.snav-drop-menu .dm-tag.navy { background:rgba(201,168,76,.15); color:var(--gold); }
+.snav-drop-menu .dm-tag.forest { background:rgba(29,158,117,.15); color:#1D9E75; }
+.snav-drop-menu .dm-tag.night { background:rgba(83,74,183,.15); color:#7B75D4; }
+
+.snav-cta {
+  background:var(--gold); color:var(--navy);
+  padding:.5rem 1.2rem; border-radius:2px;
+  font-size:.72rem; letter-spacing:.09em; text-transform:uppercase;
+  text-decoration:none; font-weight:500; transition:background .2s;
+  margin-left:.5rem; white-space:nowrap;
+}
+.snav-cta:hover { background:var(--gold-light); }
+
+@media(max-width:900px) {
+  .snav { padding:.9rem 1.5rem; }
+  .snav-links { display:none; }
+}
+
+/* HAMBURGER MOBILE */
+.snav-hamburger {
+  display:none;
+  flex-direction:column;
+  gap:5px;
+  cursor:pointer;
+  padding:.4rem;
+  background:none;
+  border:none;
+}
+.snav-hamburger span {
+  display:block;
+  width:24px;
+  height:2px;
+  background:rgba(255,255,255,.7);
+  transition:all .3s;
+  border-radius:1px;
+}
+.snav-mobile-menu {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:490;
+  background:rgba(13,31,60,.98);
+  backdrop-filter:blur(20px);
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+}
+.snav-mobile-menu.open { display:flex; }
+.snav-mobile-menu a, .snav-mobile-menu button {
+  font-family:'DM Sans',sans-serif;
+  font-size:1.2rem;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+  text-decoration:none;
+  padding:1rem 2rem;
+  width:100%;
+  text-align:center;
+  border:none;
+  background:none;
+  cursor:pointer;
+  transition:color .2s;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.snav-mobile-menu a:hover, .snav-mobile-menu button:hover { color:var(--white); }
+.snav-mobile-menu .mob-sub {
+  font-size:.85rem;
+  color:rgba(255,255,255,.4);
+  padding:.6rem 2rem;
+  border-bottom:1px solid rgba(255,255,255,.04);
+  letter-spacing:.05em;
+}
+.snav-mobile-menu .mob-sub:hover { color:rgba(255,255,255,.7); }
+.snav-mobile-close {
+  position:absolute;
+  top:1.2rem;
+  right:1.5rem;
+  font-size:1.5rem;
+  color:rgba(255,255,255,.4);
+  cursor:pointer;
+  background:none;
+  border:none;
+  line-height:1;
+
+  pointer-events: none;
+}
+@media(max-width:900px) {
+  .snav-links { display:none !important; }
+  .snav-cta { display:none !important; }
+  .snav-hamburger { display:flex !important; }
+  .snav-cta { display:none !important; }
+  .snav-hamburger { display:flex !important; }
+  .snav { padding:.9rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+<nav class="snav" id="sharedNav">
+  <a href="index.html" class="snav-logo">
+    <span class="snav-logo-dot"></span>Victor Julia CGP
+  </a>
+  <ul class="snav-links">
+    <li><a href="index.html">Accueil</a></li>
+    <li><a href="index.html#univers">Expertises</a></li>
+    <li class="snav-drop">
+      <button class="snav-drop-trigger">Simulateurs <span class="arr">▾</span></button>
+      <div class="snav-drop-menu">
+        <a href="valoris.html"><span class="dm-tag navy">Dirigeants</span>Valoris</a>
+        <a href="diagnostic-prevoyance.html"><span class="dm-tag forest">Santé</span>PrevPro</a>
+        <a href="assurance-emprunteur.html"><span class="dm-tag night">Emprunteurs</span>Assurance emprunteur</a>
+      </div>
+    </li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#about">À propos</a></li>
+  </ul>
+  <a href="https://cal.com/victor-julia/30min" target="_blank" class="snav-cta">Prendre RDV</a>
+  <button class="snav-hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="snav-mobile-menu" id="mobileMenu">
+  <button class="snav-mobile-close" onclick="document.getElementById('mobileMenu').classList.remove('open')">✕</button>
+  <a href="index.html">Accueil</a>
+  <a href="index.html#univers">Expertises</a>
+  <a href="valoris.html" class="mob-sub">↳ Valoris</a>
+  <a href="diagnostic-prevoyance.html" class="mob-sub">↳ PrevPro</a>
+  <a href="assurance-emprunteur.html" class="mob-sub">↳ Assurance emprunteur</a>
+  <a href="blog.html">Blog</a>
+  <a href="about.html">À propos</a>
+  <a href="https://cal.com/victor-julia/30min" target="_blank" style="color:var(--gold);margin-top:1rem">Prendre RDV →</a>
+</div>
+<script>
+// Highlight active page
+(function(){
+  var p = window.location.pathname.split('/').pop()||'index.html';
+  document.querySelectorAll('.snav-links a').forEach(function(a){
+    if(a.getAttribute('href')===p) a.parentElement.classList.add('active-page');
+  });
+  // Email anti-obfuscation
+  document.querySelectorAll('[data-email]').forEach(function(el){
+    var e = el.getAttribute('data-email');
+    el.href = 'mailto:' + e;
+    if(el.getAttribute('data-show')) el.textContent = e;
+  });
+
+  // Dropdown with delay
+  document.querySelectorAll('.snav-drop').forEach(function(drop) {
+    var menu = drop.querySelector('.snav-drop-menu');
+    var timer;
+    drop.addEventListener('mouseenter', function() {
+      clearTimeout(timer);
+      menu.classList.add('open');
+    });
+    drop.addEventListener('mouseleave', function() {
+      timer = setTimeout(function() {
+        menu.classList.remove('open');
+      }, 300);
+    });
+    if (menu) {
+      menu.addEventListener('mouseenter', function() {
+        clearTimeout(timer);
+      });
+      menu.addEventListener('mouseleave', function() {
+        timer = setTimeout(function() {
+          menu.classList.remove('open');
+        }, 300);
+      });
+    }
+  });
+})();
+</script>
+
+<div class="hero-strip" style="padding-top:58px" >
+  <span class="hs-tag">Loi Lemoine · Gratuit · Sans engagement</span>
+  <h1 class="hs-title">Votre assurance emprunteur<br>est peut-être <em>trop chère.</em></h1>
+  <p class="hs-sub">2 minutes pour savoir si une renégociation vaut le coup pour vous. Victor vous contacte ensuite avec une analyse et des chiffres réels.</p>
+</div>
+
+<div class="main">
+
+  <!-- FORM -->
+  <div class="form-panel">
+    <div class="step-bar">
+      <div class="sb on" id="sb1"></div>
+      <div class="sb" id="sb2"></div>
+      <div class="sb" id="sb3"></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step on" id="s1">
+      <div class="step-lbl">Étape 1 / 3</div>
+      <div class="step-title">Quel type de prêt ?</div>
+      <div class="step-hint">La nature du crédit détermine les garanties couvertes et les offres disponibles.</div>
+      <div class="type-grid">
+        <div class="tc" data-type="rp" onclick="pickType(this)">
+          <div class="tc-icon">🏠</div>
+          <div class="tc-label">Résidence principale</div>
+          <div class="tc-desc">Votre logement actuel</div>
+        </div>
+        <div class="tc" data-type="loc" onclick="pickType(this)">
+          <div class="tc-icon">🏢</div>
+          <div class="tc-label">Investissement locatif</div>
+          <div class="tc-desc">Bien mis en location</div>
+        </div>
+        <div class="tc" data-type="pro" onclick="pickType(this)">
+          <div class="tc-icon">⚕️</div>
+          <div class="tc-label">Prêt professionnel</div>
+          <div class="tc-desc">Cabinet, matériel, local</div>
+        </div>
+        <div class="tc" data-type="multi" onclick="pickType(this)">
+          <div class="tc-icon">📋</div>
+          <div class="tc-label">Plusieurs crédits</div>
+          <div class="tc-desc">Plusieurs prêts en cours</div>
+        </div>
+      </div>
+      <div class="fnav"><span></span><button class="btn-next" onclick="goS(2)">Suivant →</button></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" id="s2">
+      <div class="step-lbl">Étape 2 / 3</div>
+      <div class="step-title">Votre prêt en quelques chiffres</div>
+      <div class="step-hint">Pas besoin de connaître le détail de votre assurance, je fais l'analyse complète lors de notre échange.</div>
+
+      <div class="inline-info">
+        💡 <strong>Où trouver le capital restant dû ?</strong> Sur votre dernier relevé annuel de prêt ou votre tableau d'amortissement. C'est la seule donnée dont vous avez besoin, je m'occupe du reste.ictor s'occupe du reste.
+      </div>
+
+      <!-- Capital restant -->
+      <div class="fg">
+        <label>Capital restant dû <span class="val" id="v_capital">150 000 €</span></label>
+        <input type="range" id="sl_capital" min="10000" max="800000" step="5000" value="150000"
+          oninput="onSlide('capital')">
+        <div class="range-ticks"><span>10 k€</span><span>200 k€</span><span>400 k€</span><span>600 k€</span><span>800 k€</span></div>
+      </div>
+
+      <!-- Durée restante -->
+      <div class="fg">
+        <label>Durée restante <span class="val" id="v_duree">12 ans</span></label>
+        <input type="range" id="sl_duree" min="1" max="30" step="1" value="12"
+          oninput="onSlide('duree')">
+        <div class="range-ticks"><span>1 an</span><span>8 ans</span><span>15 ans</span><span>22 ans</span><span>30 ans</span></div>
+      </div>
+
+      <!-- Déjà renégocié -->
+      <div class="toggle-row">
+        <div class="toggle-label">
+          Avez-vous déjà renégocié votre assurance ?
+          <small>Possible à tout moment depuis la Loi Lemoine (2022)</small>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="tog_renego" onchange="onSlide('renego')">
+          <div class="toggle-track"></div>
+        </label>
+      </div>
+
+      <div class="fnav">
+        <button class="btn-back" onclick="goS(1)">← Retour</button>
+        <button class="btn-next" onclick="goS(3)">Suivant →</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" id="s3">
+      <div class="step-lbl">Étape 3 / 3</div>
+      <div class="step-title">Vos coordonnées</div>
+      <div class="step-hint">Je vous contacte sous 24h avec une analyse personnalisée et les meilleures offres disponibles pour votre profil.</div>
+      <div class="frow">
+        <div class="fg"><label>Prénom</label><input type="text" id="c_prenom" placeholder="Marie"></div>
+        <div class="fg"><label>Nom</label><input type="text" id="c_nom" placeholder="Dupont"></div>
+      </div>
+      <div class="fg"><label>Email</label><input type="email" id="c_email" placeholder="marie@email.fr"></div>
+      <div class="fg"><label>Téléphone</label><input type="tel" id="c_tel" placeholder="06 XX XX XX XX"></div>
+      <div class="fg">
+        <label>Banque prêteuse (optionnel)</label>
+        <select id="c_banque">
+          <option value="">Sélectionner…</option>
+          <option>BNP Paribas</option><option>Crédit Agricole</option>
+          <option>Société Générale</option><option>LCL</option>
+          <option>Caisse d'Épargne</option><option>Banque Populaire</option>
+          <option>CIC</option><option>Crédit Mutuel</option>
+          <option>La Banque Postale</option><option>Autre</option>
+        </select>
+      </div>
+      <div class="fnav">
+        <button class="btn-back" onclick="goS(2)">← Retour</button>
+        <button class="btn-check" onclick="submit()">Envoyer mon dossier →</button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="success-box" id="successBox">
+      <div class="success-check">✓</div>
+      <div class="success-title">Demande bien reçue</div>
+      <div class="success-body">
+        Un email de confirmation vient de vous être envoyé. J'étudie votre dossier et vous rappelle sous <strong style="color:var(--white)">24h ouvrées</strong> avec une analyse complète de votre situation.<br><br>
+        Ou prenez directement rendez-vous : <a href="https://cal.com/victor-julia/30min" target="_blank" style="color:var(--gold)">cal.com/victor-julia →</a><br><br>
+        Découvrez aussi mon outil de valorisation : <a href="https://victorjulia.fr/#wizvalue" style="color:var(--gold)">Valoris →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- Eligibility -->
+    <div class="elig-card" id="eligCard">
+      <div class="elig-status">
+        <div class="elig-dot"></div>
+        <div class="elig-status-txt" id="eligTxt">En attente</div>
+      </div>
+      <div class="elig-title" id="eligTitle">Complétez les informations</div>
+      <div class="elig-body" id="eligBody">Renseignez les données de votre prêt pour voir si une renégociation est pertinente.</div>
+      <div class="crit-list" id="critList"></div>
+    </div>
+
+    <!-- Recap -->
+    <div class="info-box" id="recapBox" style="display:none">
+      <div class="ib-title">Récapitulatif</div>
+      <div class="ib-row"><span class="ib-lbl">Type de prêt</span><span class="ib-val" id="r_type"></span></div>
+      <div class="ib-row"><span class="ib-lbl">Capital restant</span><span class="ib-val" id="r_capital"></span></div>
+      <div class="ib-row"><span class="ib-lbl">Durée restante</span><span class="ib-val" id="r_duree"></span></div>
+    </div>
+
+    <!-- Lemoine -->
+    <div class="lemoine">
+      <div class="lemoine-icon">⚖️</div>
+      <div class="lemoine-txt">
+        <strong>Loi Lemoine (sept. 2022)</strong>, Vous pouvez changer d'assurance emprunteur <strong>à tout moment</strong>, sans frais ni pénalités. La banque ne peut pas refuser si les garanties sont équivalentes.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// Seuil capital indicatif, Victor vérifie la cotisation réelle lors du rappel
+let selectedType = null;
+let touchedCapital = false;
+let touchedDuree = false;
+
+const typeLabels = { rp:'Résidence principale', loc:'Investissement locatif', pro:'Prêt professionnel', multi:'Plusieurs crédits' };
+
+function fmtE(n){ return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); }
+function fmtAns(n){ return n<=1?'1 an':n+' ans'; }
+
+function pickType(el){
+  document.querySelectorAll('.tc').forEach(c=>c.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedType = el.dataset.type;
+  updateSidebar();
+}
+
+function onSlide(which){
+  if(which==='capital') touchedCapital = true;
+  if(which==='duree')   touchedDuree   = true;
+  const cap = +document.getElementById('sl_capital').value;
+  const duree = +document.getElementById('sl_duree').value;
+  document.getElementById('v_capital').textContent = fmtE(cap);
+  document.getElementById('v_duree').textContent = fmtAns(duree);
+  updateSidebar();
+}
+
+function updateSidebar(){
+  const cap   = +document.getElementById('sl_capital').value;
+  const duree = +document.getElementById('sl_duree').value;
+  const dejarenego = document.getElementById('tog_renego').checked;
+
+  // Critères
+  const cType  = !!selectedType;
+  const cSeuil = touchedCapital && cap >= 50000;  // proxy capital : Victor vérifie la cotisation en rappel
+  const c30j   = touchedDuree;                     // neutre tant que non renseigné
+
+  const crits = [
+    { met: cType,  txt: cType ? 'Type de prêt renseigné' : 'Type de prêt à sélectionner' },
+    { met: cSeuil, txt: 'Capital restant ≥ ' + fmtE(50000) + ' (seuil indicatif)' },
+    { met: c30j,   txt: touchedDuree ? 'Prêt de plus de 30 jours (Loi Lemoine)' : 'Durée restante à renseigner' },
+  ];
+
+  const card = document.getElementById('eligCard');
+  card.className = 'elig-card';
+
+  const allMet = cType && cSeuil;
+
+  if(allMet){
+    card.classList.add('ok');
+    document.getElementById('eligTxt').textContent = 'Éligible';
+    document.getElementById('eligTitle').textContent = dejarenego
+      ? 'Déjà renégocié, mais peut-être encore mieux'
+      : 'Votre dossier semble éligible';
+    document.getElementById('eligBody').textContent = dejarenego
+      ? 'Les taux de délégation évoluent. Une 2ème renégociation peut encore générer des économies. Victor vérifie avec vous.'
+      : 'Victor vous contacte pour comparer les offres du marché sur votre profil exact.';
+  } else if(cType && !cSeuil) {
+    card.classList.add('warn');
+    document.getElementById('eligTxt').textContent = 'À vérifier';
+    document.getElementById('eligTitle').textContent = 'Cotisation restante faible';
+    document.getElementById('eligBody').textContent = 'Le capital restant est faible. La renégociation peut quand même valoir le coup, Victor vérifie le détail avec vous en 10 minutes.';
+  } else {
+    document.getElementById('eligTxt').textContent = 'En attente';
+    document.getElementById('eligTitle').textContent = 'Complétez les informations';
+    document.getElementById('eligBody').textContent = 'Sélectionnez le type de prêt et renseignez les données pour qualifier votre dossier.';
+  }
+
+  // Critères liste
+  document.getElementById('critList').innerHTML = crits.map(c=>`
+    <div class="crit ${c.met?'met':'ko-c'}">
+      <span class="crit-i">${c.met?'✓':'✗'}</span>
+      <span>${c.txt}</span>
+    </div>`).join('');
+
+  // Recap
+  if(selectedType){
+    document.getElementById('recapBox').style.display='block';
+    document.getElementById('r_type').textContent = typeLabels[selectedType]||'';
+    document.getElementById('r_capital').textContent = fmtE(cap);
+    document.getElementById('r_duree').textContent = fmtAns(duree);
+  }
+}
+
+function goS(n){
+  if(n>1 && !selectedType){ alert('Veuillez sélectionner le type de prêt.'); return; }
+  [1,2,3].forEach(i=>{
+    document.getElementById('s'+i).classList.toggle('on',i===n);
+    document.getElementById('sb'+i).classList.toggle('on',i<=n);
+  });
+  if(n>=2){ updateSidebar(); }
+}
+
+function submit(){
+  const prenom = document.getElementById('c_prenom').value;
+  const email  = document.getElementById('c_email').value;
+  if(!prenom||!email){ alert('Renseignez votre prénom et votre email.'); return; }
+
+  // Payload Make.com
+  const payload = {
+    type: selectedType,
+    capital: document.getElementById('sl_capital').value,
+    duree_restante: document.getElementById('sl_duree').value,
+    deja_renego: document.getElementById('tog_renego').checked,
+    banque: document.getElementById('c_banque').value,
+    prenom, nom: document.getElementById('c_nom').value,
+    email, tel: document.getElementById('c_tel').value,
+    eligible: document.getElementById('eligTxt').textContent
+  };
+  console.log('→ Make.com webhook payload:', JSON.stringify(payload, null, 2));
+  [1,2,3].forEach(i=>{ document.getElementById('s'+i).style.display='none'; });
+  document.querySelector('.step-bar').style.display='none';
+  // Envoi Make → Notion
+  fetch('https://hook.eu1.make.com/y5whizcm2lilhd8fcsu1dufqmpup257g', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(Object.assign(payload, {
+      source: 'Assurance emprunteur',
+      date_lead: new Date().toISOString().split('T')[0],
+      statut: 'Lead entrant'
+    }))
+  }).catch(function(e){ console.error('Make:', e); });
+  document.getElementById('successBox').classList.add('show');
+}
+
+// Init, ne pas déclencher updateSidebar au chargement,
+// les critères restent neutres jusqu'à interaction
+const cap0 = +document.getElementById('sl_capital').value;
+const dur0 = +document.getElementById('sl_duree').value;
+document.getElementById('v_capital').textContent = fmtE(cap0);
+document.getElementById('v_duree').textContent = fmtAns(dur0);
+</script>
+<a href="https://wa.me/33744749245" target="_blank" style="position:fixed;bottom:2rem;right:2rem;z-index:400;width:52px;height:52px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,.35);" title="WhatsApp" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- RGPD CONSENT BANNER -->
+<div id="rgpdBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9999;background:#0D1F3C;border-top:2px solid #C9A84C;padding:1.2rem 2rem;font-family:'DM Sans',sans-serif;">
+  <div style="max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;">
+    <div style="flex:1;min-width:260px;">
+      <p style="font-size:.82rem;color:rgba(255,255,255,.7);margin:0;line-height:1.6;">
+        Ce site utilise le stockage local pour le blog. Aucun cookie de traçage n'est utilisé.
+        <a href="politique-confidentialite.html" style="color:#C9A84C;text-decoration:underline;">Politique de confidentialité</a>
+      </p>
+    </div>
+    <div style="display:flex;gap:.8rem;flex-shrink:0;">
+      <button onclick="acceptRGPD()" style="background:#C9A84C;color:#0D1F3C;border:none;padding:.55rem 1.4rem;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;">J'ai compris</button>
+      <a href="politique-confidentialite.html" style="color:rgba(255,255,255,.4);font-size:.75rem;text-decoration:none;display:flex;align-items:center;">En savoir plus</a>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  if(!localStorage.getItem('rgpd_ok')){
+    document.getElementById('rgpdBanner').style.display='block';
+  }
+})();
+function acceptRGPD(){
+  localStorage.setItem('rgpd_ok','1');
+  document.getElementById('rgpdBanner').style.display='none';
+}
+</script>
+
+</body>
+</html>
