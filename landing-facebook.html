@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Votre assurance de prêt Victor Julia</title>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0D1F3C;
+  --gold: #C9A84C;
+  --gold-light: #F0D080;
+  --white: #FFFFFF;
+  --cream: #F8F5EF;
+  --muted: #8A8F9E;
+  --border: #E8E8E8;
+  --success: #1DB66A;
+  --radius: 16px;
+  --shadow: 0 4px 24px rgba(13,31,60,0.10);
+  --shadow-hover: 0 8px 32px rgba(13,31,60,0.16);
+}
+
+html, body {
+  height: 100%;
+  font-family: 'Manrope', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* PROGRESS BAR */
+.progress-wrap {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  background: var(--cream);
+  padding: 16px 24px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.logo {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  letter-spacing: -0.02em;
+}
+.logo span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.back-btn {
+  background: none;
+  border: none;
+  font-family: 'Manrope', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.back-btn:hover { color: var(--navy); }
+.step-back { display: block; text-align: center; width: 100%; }
+.step-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+.progress-bar-bg {
+  height: 4px;
+  background: var(--border);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 25%;
+}
+
+/* MAIN LAYOUT */
+.screen {
+  min-height: 100vh;
+  padding: 100px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.step {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  animation: slideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.step.active { display: flex; flex-direction: column; align-items: center; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.step.slide-left { animation: slideInLeft 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
+
+/* QUESTION */
+.question-emoji {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+  text-align: center;
+}
+.question-title {
+  font-size: clamp(22px, 5vw, 28px);
+  font-weight: 800;
+  color: var(--navy);
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+}
+.question-sub {
+  font-size: 14px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+/* TILES */
+.tiles {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+.tiles.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.tile {
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 18px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  box-shadow: var(--shadow);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.tiles.two-col .tile {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 24px 16px;
+}
+.tile:hover {
+  border-color: var(--gold);
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+}
+.tile:active {
+  transform: scale(0.97);
+}
+.tile.selected {
+  border-color: var(--navy);
+  background: var(--navy);
+  box-shadow: 0 8px 32px rgba(13,31,60,0.25);
+  transform: translateY(-2px);
+}
+.tile.selected .tile-label,
+.tile.selected .tile-sub {
+  color: var(--white);
+}
+.tile.selected .tile-icon {
+  filter: brightness(10);
+}
+.tile.selected .tile-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tile-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.tiles.two-col .tile-icon { font-size: 36px; }
+
+.tile-text { flex: 1; }
+.tiles.two-col .tile-text { flex: none; }
+
+.tile-label {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.2;
+  transition: color 0.2s;
+}
+.tiles.two-col .tile-label { font-size: 14px; }
+
+.tile-sub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+  transition: color 0.2s;
+}
+
+.tile-check {
+  width: 24px; height: 24px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* CONTACT STEP */
+.contact-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.input-group { width: 100%; }
+.input-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+  display: block;
+}
+.input-field {
+  width: 100%;
+  padding: 16px 18px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.2s;
+  box-shadow: var(--shadow);
+}
+.input-field::placeholder { color: #C5C8D0; font-weight: 500; }
+.input-field:focus { border-color: var(--navy); }
+
+.pref-btns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.pref-btn {
+  padding: 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--cream);
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+  -webkit-tap-highlight-color: transparent;
+}
+.pref-btn:hover { border-color: var(--gold); }
+.pref-btn.active {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: var(--white);
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 18px;
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Manrope', sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+  margin-top: 4px;
+  box-shadow: 0 4px 24px rgba(13,31,60,0.25);
+}
+.submit-btn:hover {
+  background: #1a3260;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(13,31,60,0.3);
+}
+.submit-btn:active { transform: scale(0.98); }
+
+.rgpd-note {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+.rgpd-note a { color: var(--gold); text-decoration: none; }
+
+/* HERO BADGE */
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(201,168,76,0.12);
+  border: 1px solid rgba(201,168,76,0.3);
+  border-radius: 99px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #9A7830;
+  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+}
+
+/* SUCCESS */
+.success-screen {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.success-screen.active { display: flex; flex-direction: column; align-items: center; }
+
+.success-circle {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--success), #16A35A);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36px;
+  margin: 0 auto 24px;
+  box-shadow: 0 8px 32px rgba(29,182,106,0.3);
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+@keyframes popIn {
+  from { transform: scale(0); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.success-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 12px;
+  letter-spacing: -0.03em;
+}
+.success-body {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.65;
+  max-width: 340px;
+}
+.success-body strong { color: var(--navy); }
+
+.recap-box {
+  width: 100%;
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin: 24px 0;
+  text-align: left;
+}
+.recap-title {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.recap-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+.recap-row:last-child { border-bottom: none; }
+.recap-lbl { color: var(--muted); }
+.recap-val { font-weight: 700; color: var(--navy); }
+
+/* ORIAS */
+.orias-footer {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+@media (min-width: 480px) {
+  .tiles.two-col { display: grid; grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- PROGRESS -->
+<div class="progress-wrap">
+  <div class="progress-top">
+    <div class="logo"><span></span>Victor Julia</div>
+    <div class="step-label" id="stepLabel">Étape 1 sur 4</div>
+  </div>
+  <div class="progress-bar-bg">
+    <div class="progress-bar-fill" id="progressFill"></div>
+  </div>
+</div>
+
+<div class="screen">
+
+  <!-- STEP 1 Capital -->
+  <div class="step active" id="s1">
+    <span class="question-emoji">🏠</span>
+    <h1 class="question-title">Quel est votre capital restant dû ?</h1>
+    <p class="question-sub">Une estimation suffit, je fais l'analyse précise lors de notre échange.</p>
+    <div class="tiles">
+      <div class="tile" onclick="selectTile(this, 's1', 'capital', 'Moins de 100 000 €')">
+        <span class="tile-icon">💶</span>
+        <div class="tile-text">
+          <div class="tile-label">Moins de 100 000 €</div>
+          <div class="tile-sub">Capital restant faible</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's1', 'capital', 'Entre 100 000 € et 250 000 €')">
+        <span class="tile-icon">🏡</span>
+        <div class="tile-text">
+          <div class="tile-label">100 000 € – 250 000 €</div>
+          <div class="tile-sub">La majorité des dossiers</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's1', 'capital', 'Plus de 250 000 €')">
+        <span class="tile-icon">🏢</span>
+        <div class="tile-text">
+          <div class="tile-label">Plus de 250 000 €</div>
+          <div class="tile-sub">Fort potentiel d'économie</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 Durée -->
+  <div class="step" id="s2">
+    <span class="question-emoji">📅</span>
+    <h1 class="question-title">Depuis combien de temps remboursez-vous ?</h1>
+    <p class="question-sub">La durée écoulée détermine l'économie potentielle.</p>
+    <div class="tiles">
+      <div class="tile" onclick="selectTile(this, 's2', 'duree', 'Moins de 3 ans')">
+        <span class="tile-icon">🌱</span>
+        <div class="tile-text">
+          <div class="tile-label">Moins de 3 ans</div>
+          <div class="tile-sub">Économies maximales possibles</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's2', 'duree', 'Entre 3 et 10 ans')">
+        <span class="tile-icon">📈</span>
+        <div class="tile-text">
+          <div class="tile-label">3 à 10 ans</div>
+          <div class="tile-sub">Belles économies encore disponibles</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's2', 'duree', 'Plus de 10 ans')">
+        <span class="tile-icon">🏁</span>
+        <div class="tile-text">
+          <div class="tile-label">Plus de 10 ans</div>
+          <div class="tile-sub">Je vérifie avec vous</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+    </div>
+    <button class="back-btn step-back" onclick="goBack()" style="margin-top:16px;">← Retour</button>
+  </div>
+
+  <!-- STEP 3 Renégocié -->
+  <div class="step" id="s3">
+    <span class="question-emoji">🔄</span>
+    <h1 class="question-title">Avez-vous déjà changé d'assurance de prêt ?</h1>
+    <p class="question-sub">Depuis la loi Lemoine, c'est possible à tout moment même plusieurs fois.</p>
+    <div class="tiles two-col">
+      <div class="tile" onclick="selectTile(this, 's3', 'renego', 'Non, jamais')">
+        <span class="tile-icon">🙅</span>
+        <div class="tile-text">
+          <div class="tile-label">Non, jamais</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's3', 'renego', 'Oui, déjà fait')">
+        <span class="tile-icon">✅</span>
+        <div class="tile-text">
+          <div class="tile-label">Oui, déjà fait</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+    </div>
+    <button class="back-btn step-back" onclick="goBack()" style="margin-top:16px;">← Retour</button>
+  </div>
+
+  <!-- STEP 4 Contact -->
+  <div class="step" id="s4">
+    <span class="question-emoji">👋</span>
+    <h1 class="question-title">On se contacte !</h1>
+    <p class="question-sub">Je reviens vers vous rapidement pour votre analyse gratuite.</p>
+
+    <div class="contact-form">
+      <div class="input-group">
+        <label class="input-label">Votre prénom</label>
+        <input type="text" class="input-field" id="c_prenom" placeholder="Marie" autocomplete="given-name">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Comment préférez-vous être recontacté ?</label>
+        <div class="pref-btns">
+          <button class="pref-btn" id="pref_tel" onclick="setPref('tel')">📞 Téléphone</button>
+          <button class="pref-btn" id="pref_email" onclick="setPref('email')">📧 Email</button>
+        </div>
+      </div>
+
+      <div class="input-group" id="contact_wrap" style="display:none;">
+        <label class="input-label" id="contact_label">Téléphone</label>
+        <input type="tel" class="input-field" id="c_tel" placeholder="06 XX XX XX XX" autocomplete="tel" style="display:none;">
+        <input type="email" class="input-field" id="c_email" placeholder="marie@email.fr" autocomplete="email" style="display:none;">
+      </div>
+
+      <button class="back-btn step-back" onclick="goBack()" style="margin-bottom:8px;">← Retour</button>
+      <button class="submit-btn" onclick="submitForm()">Envoyer ma demande</button>
+
+      <p class="rgpd-note">
+        En envoyant ce formulaire, vous acceptez d'être recontacté par Victor Julia, Courtier Indépendant (ORIAS n° 25 005 899), dans le cadre d'une étude gratuite et sans engagement.
+        <a href="https://victorjulia.fr/politique-confidentialite.html" target="_blank">Politique de confidentialité</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-circle">✓</div>
+    <h2 class="success-title">Demande reçue !</h2>
+    <p class="success-body">Je reviens vers vous rapidement pour votre analyse personnalisée. À très vite !</p>
+    <div class="recap-box" id="recapBox">
+      <div class="recap-title">Votre dossier</div>
+      <div class="recap-row"><span class="recap-lbl">Capital restant</span><span class="recap-val" id="r_capital"></span></div>
+      <div class="recap-row"><span class="recap-lbl">Remboursement</span><span class="recap-val" id="r_duree"></span></div>
+      <div class="recap-row"><span class="recap-lbl">Déjà renégocié</span><span class="recap-val" id="r_renego"></span></div>
+      <div class="recap-row"><span class="recap-lbl">Contact</span><span class="recap-val" id="r_contact"></span></div>
+    </div>
+    <p class="success-body" style="font-size:13px;">
+      Ou prenez directement rendez-vous :<br>
+      <a href="https://cal.com/victor-julia/30min" target="_blank" style="color:var(--gold);font-weight:700;">cal.com/victor-julia →</a>
+    </p>
+  </div>
+
+</div>
+
+<div class="orias-footer">Victor Julia CGP · Courtier Indépendant · ORIAS n° 25 005 899 · Étude gratuite, sans engagement</div>
+
+<script>
+const answers = {};
+let contactPref = null;
+let currentStep = 1;
+const totalSteps = 4;
+
+const progressFill = document.getElementById('progressFill');
+const stepLabel = document.getElementById('stepLabel');
+
+function updateProgress(step) {
+  const pct = (step / totalSteps) * 100;
+  progressFill.style.width = pct + '%';
+  if (step <= totalSteps) {
+    stepLabel.textContent = 'Étape ' + step + ' sur ' + totalSteps;
+  } else {
+    stepLabel.textContent = 'Terminé ✓';
+  }
+}
+
+function selectTile(el, stepId, key, value) {
+  // Deselect all tiles in this step
+  const tiles = document.querySelectorAll('#' + stepId + ' .tile');
+  tiles.forEach(t => t.classList.remove('selected'));
+  
+  // Select this tile
+  el.classList.add('selected');
+  answers[key] = value;
+
+  // Auto-advance after short delay
+  setTimeout(() => {
+    goNext(stepId);
+  }, 400);
+}
+
+function goNext(currentId) {
+  const stepNum = parseInt(currentId.replace('s', ''));
+  const nextNum = stepNum + 1;
+  
+  const currentEl = document.getElementById(currentId);
+  const nextEl = document.getElementById('s' + nextNum);
+  
+  currentEl.classList.remove('active');
+  currentEl.classList.remove('slide-left');
+  
+  if (nextEl) {
+    nextEl.classList.remove('slide-left');
+    nextEl.classList.add('active');
+    currentStep = nextNum;
+    updateProgress(nextNum);
+    
+  } else {
+    // Show success
+    document.getElementById('successScreen').classList.add('active');
+    document.getElementById('stepLabel').textContent = 'Terminé ✓';
+    progressFill.style.width = '100%';
+  }
+}
+
+function setPref(pref) {
+  contactPref = pref;
+  document.getElementById('pref_tel').classList.toggle('active', pref === 'tel');
+  document.getElementById('pref_email').classList.toggle('active', pref === 'email');
+  
+  const wrap = document.getElementById('contact_wrap');
+  const lbl = document.getElementById('contact_label');
+  const telInput = document.getElementById('c_tel');
+  const emailInput = document.getElementById('c_email');
+  
+  wrap.style.display = 'block';
+  
+  if (pref === 'tel') {
+    lbl.textContent = 'Votre téléphone';
+    telInput.style.display = 'block';
+    emailInput.style.display = 'none';
+    telInput.focus();
+  } else {
+    lbl.textContent = 'Votre email';
+    emailInput.style.display = 'block';
+    telInput.style.display = 'none';
+    emailInput.focus();
+  }
+}
+
+function submitForm() {
+  const prenom = document.getElementById('c_prenom').value.trim();
+  if (!prenom) { alert('Merci d\'indiquer votre prénom.'); return; }
+  if (!contactPref) { alert('Choisissez votre préférence de contact.'); return; }
+  
+  const tel = document.getElementById('c_tel').value.trim();
+  const email = document.getElementById('c_email').value.trim();
+  
+  if (contactPref === 'tel' && !tel) { alert('Merci d\'indiquer votre téléphone.'); return; }
+  if (contactPref === 'email' && !email) { alert('Merci d\'indiquer votre email.'); return; }
+
+  // Populate recap
+  document.getElementById('r_capital').textContent = answers.capital || '';
+  document.getElementById('r_duree').textContent = answers.duree || '';
+  document.getElementById('r_renego').textContent = answers.renego || '';
+  document.getElementById('r_contact').textContent = contactPref === 'tel' ? tel : email;
+
+  // Hide form step
+  document.getElementById('s4').classList.remove('active');
+  document.getElementById('successScreen').classList.add('active');
+  progressFill.style.width = '100%';
+  stepLabel.textContent = 'Terminé ✓';
+
+  // Send to Make webhook
+  const payload = {
+    prenom,
+    capital: answers.capital,
+    duree: answers.duree,
+    renego: answers.renego,
+    contact_pref: contactPref,
+    tel: contactPref === 'tel' ? tel : '',
+    email: contactPref === 'email' ? email : '',
+    source: 'Landing Facebook ADE',
+    date_lead: new Date().toISOString().split('T')[0],
+    statut: 'Lead entrant'
+  };
+
+  fetch('https://hook.eu1.make.com/y5whizcm2lilhd8fcsu1dufqmpup257g', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(e => console.error('Make webhook:', e));
+}
+
+
+function goBack() {
+  if (currentStep <= 1) return;
+  const currentEl = document.getElementById('s' + currentStep);
+  const prevEl = document.getElementById('s' + (currentStep - 1));
+  
+  currentEl.classList.remove('active');
+  prevEl.classList.add('active', 'slide-left');
+  currentStep--;
+  updateProgress(currentStep);
+  
+}
+// Init progress
+updateProgress(1);
+</script>
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-583ZVTMW');</script>
+
+</body>
+</html>
