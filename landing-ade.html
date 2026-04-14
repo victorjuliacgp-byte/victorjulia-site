@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Votre assurance de prêt Victor Julia</title>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<!-- Meta Pixel Base Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '784512404512542');
+fbq('track', 'PageView');
+</script>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -715,15 +728,14 @@ function submitForm() {
   progressFill.style.width = '100%';
   stepLabel.textContent = 'Terminé ✓';
 
-  // Événement GTM → Meta Pixel
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    event: 'lead_generated',
-    lead_prenom: prenom,
-    lead_contact_pref: contactPref,
-    lead_capital: answers.capital,
-    lead_duree: answers.duree
-  });
+  // Meta Pixel - événement Lead
+  if (typeof fbq === 'function') {
+    fbq('track', 'Lead', {
+      content_name: 'Assurance Emprunteur',
+      content_category: 'ADE',
+      currency: 'EUR'
+    });
+  }
 
   // Send to Make webhook
   const payload = {
