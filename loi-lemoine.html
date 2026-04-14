@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La loi Lemoine expliquée — Victor Julia, CGP</title>
+  <meta name="description" content="Comprendre la loi Lemoine en 3 minutes : ce qu'elle change pour votre assurance emprunteur, comment en profiter, et pourquoi agir maintenant." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy: #0d1b2a;
+      --navy-light: #162436;
+      --gold: #C9A84C;
+      --gold-light: #e0c278;
+      --green: #4CAF7D;
+      --white: #f9f7f4;
+      --text: #2c3e50;
+      --muted: #6b7c8f;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--navy);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    nav .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+    nav a.cta-nav {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--navy);
+      background: var(--gold);
+      padding: 0.5rem 1.2rem;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    nav a.cta-nav:hover { background: var(--gold-light); }
+
+    /* HERO */
+    .hero {
+      background: var(--navy);
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(201,168,76,0.12) 0%, transparent 70%);
+    }
+    .hero .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 600;
+      color: #fff;
+      line-height: 1.2;
+      max-width: 700px;
+      margin: 0 auto 1.2rem;
+    }
+    .hero h1 em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 520px;
+      margin: 0 auto 2rem;
+      font-weight: 300;
+    }
+    .hero .cta-hero {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.9rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .hero .cta-hero:hover { opacity: 0.88; }
+
+    /* CONTENT */
+    .content {
+      max-width: 740px;
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem 4rem;
+    }
+
+    /* KEY POINTS */
+    .key-points {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3.5rem;
+    }
+    .key-point {
+      background: #fff;
+      border: 1px solid #e8e3da;
+      border-top: 3px solid var(--gold);
+      border-radius: 6px;
+      padding: 1.4rem 1.2rem;
+    }
+    .key-point .number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      font-weight: 600;
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .key-point p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* SECTIONS */
+    .section {
+      margin-bottom: 2.8rem;
+    }
+    .section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid #e8e3da;
+    }
+    .section p {
+      font-size: 0.97rem;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+
+    /* CHECKLIST */
+    .checklist {
+      list-style: none;
+      margin: 1rem 0 1.2rem;
+    }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      font-size: 0.95rem;
+      margin-bottom: 0.65rem;
+      color: var(--text);
+    }
+    .checklist li::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    /* HIGHLIGHT BOX */
+    .highlight {
+      background: linear-gradient(135deg, rgba(201,168,76,0.08), rgba(201,168,76,0.04));
+      border-left: 3px solid var(--gold);
+      border-radius: 0 6px 6px 0;
+      padding: 1.2rem 1.4rem;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    .highlight strong { color: var(--navy); }
+
+    /* BEFORE/AFTER */
+    .compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 500px) { .compare { grid-template-columns: 1fr; } }
+    .compare-box {
+      border-radius: 6px;
+      padding: 1.2rem;
+    }
+    .compare-box.before {
+      background: #fdf0f0;
+      border: 1px solid #f0d0d0;
+    }
+    .compare-box.after {
+      background: #f0faf5;
+      border: 1px solid #c0e8d4;
+    }
+    .compare-box .label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .compare-box.before .label { color: #c0392b; }
+    .compare-box.after .label { color: var(--green); }
+    .compare-box ul {
+      list-style: none;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .compare-box ul li { margin-bottom: 0.3rem; }
+
+    /* CTA BLOCK */
+    .cta-block {
+      background: var(--navy);
+      border-radius: 10px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .cta-block h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.7rem;
+      color: #fff;
+      margin-bottom: 0.7rem;
+    }
+    .cta-block p {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    .cta-block a {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.85rem 2rem;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .cta-block a:hover { opacity: 0.88; }
+    .cta-block .orias {
+      margin-top: 1.2rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.35);
+    }
+
+    footer {
+      background: var(--navy);
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="/">Victor Julia</a>
+  <a class="cta-nav" href="https://cal.com/victor-julia/30min">Prendre rendez-vous</a>
+</nav>
+
+<section class="hero">
+  <div class="badge">Loi du 28 février 2022</div>
+  <h1>La loi Lemoine,<br><em>ce qui change pour vous</em></h1>
+  <p>Tout ce que vous devez savoir sur votre droit à changer d'assurance emprunteur, expliqué simplement.</p>
+  <a class="cta-hero" href="/assurance-emprunteur">Simuler mon économie gratuitement</a>
+</section>
+
+<div class="content">
+
+  <div class="key-points">
+    <div class="key-point">
+      <div class="number">À tout moment</div>
+      <p>Résiliation de votre assurance de prêt, sans frais, sans attendre l'échéance annuelle.</p>
+    </div>
+    <div class="key-point">
+      <div class="number">15 000 €</div>
+      <p>D'économies potentielles sur la durée totale du prêt en changeant d'assureur.</p>
+    </div>
+    <div class="key-point">
+      <div class="number">40+</div>
+      <p>Compagnies comparées pour trouver la couverture la mieux adaptée à votre profil.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Qu'est-ce que la loi Lemoine ?</h2>
+    <p>Entrée en vigueur en 2022, la loi Lemoine est une avancée majeure pour les emprunteurs immobiliers. Avant elle, changer d'assurance de prêt était compliqué : délais stricts, fenêtres annuelles, démarches lourdes.</p>
+    <p>Désormais, vous pouvez résilier votre assurance emprunteur à tout moment et sans frais, pour la remplacer par un contrat offrant des garanties équivalentes mais à un tarif inférieur.</p>
+  </div>
+
+  <div class="section">
+    <h2>Avant et après la loi</h2>
+    <div class="compare">
+      <div class="compare-box before">
+        <div class="label">Avant 2022</div>
+        <ul>
+          <li>Résiliation possible seulement à l'échéance annuelle</li>
+          <li>Dossier médical exigé systématiquement</li>
+          <li>Délais de préavis stricts</li>
+          <li>Démarches complexes</li>
+        </ul>
+      </div>
+      <div class="compare-box after">
+        <div class="label">Depuis la loi Lemoine</div>
+        <ul>
+          <li>Résiliation à tout moment, sans frais</li>
+          <li>Questionnaire médical supprimé sous 200 000 €</li>
+          <li>Délai de réponse de 10 jours pour la banque</li>
+          <li>Procédure simplifiée</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Ce que vous pouvez faire dès aujourd'hui</h2>
+    <ul class="checklist">
+      <li>Comparer votre assurance actuelle avec les offres du marché via un courtier indépendant</li>
+      <li>Obtenir un contrat avec des garanties au moins équivalentes à votre contrat bancaire</li>
+      <li>Envoyer votre demande de résiliation à votre banque, qui a 10 jours ouvrés pour répondre</li>
+      <li>Économiser plusieurs milliers d'euros sur la durée restante de votre prêt</li>
+    </ul>
+    <div class="highlight">
+      <strong>À savoir :</strong> la banque ne peut pas refuser votre demande de résiliation si le nouveau contrat présente des garanties équivalentes. C'est votre droit, encadré par la loi.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Qui peut en bénéficier ?</h2>
+    <p>Tous les emprunteurs ayant un prêt immobilier en cours, quelle que soit la date de signature du contrat initial. La loi s'applique à l'ensemble des contrats existants, pas seulement aux nouveaux prêts.</p>
+    <p>Plus votre capital restant dû est élevé et plus il vous reste d'années à rembourser, plus l'économie potentielle est importante.</p>
+  </div>
+
+  <div class="cta-block">
+    <h3>Calculez votre économie en 2 minutes</h3>
+    <p>Je compare les offres de plus de 40 compagnies pour vous et vous accompagne dans toutes les démarches, sans frais.</p>
+    <a href="/assurance-emprunteur">Démarrer la simulation gratuite</a>
+    <div class="orias">Victor Julia — Courtier en assurance — ORIAS n° 25 005 899</div>
+  </div>
+
+</div>
+
+<footer>
+  © Victor Julia — Conseil en Gestion de Patrimoine — ORIAS 25 005 899 — SIREN 944 712 256 — Rouen
+</footer>
+
+</body>
+</html>
