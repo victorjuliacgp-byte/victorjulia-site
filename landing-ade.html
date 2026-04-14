@@ -715,6 +715,16 @@ function submitForm() {
   progressFill.style.width = '100%';
   stepLabel.textContent = 'Terminé ✓';
 
+  // Événement GTM → Meta Pixel
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'lead_generated',
+    lead_prenom: prenom,
+    lead_contact_pref: contactPref,
+    lead_capital: answers.capital,
+    lead_duree: answers.duree
+  });
+
   // Send to Make webhook
   const payload = {
     prenom,
