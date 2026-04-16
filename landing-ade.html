@@ -47,21 +47,25 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* PROGRESS BAR */
+/* =========================================
+   PROGRESS HEADER
+   ========================================= */
 .progress-wrap {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
   background: var(--cream);
-  padding: 16px 24px 12px;
+  padding: 14px 24px 12px;
   border-bottom: 1px solid var(--border);
 }
+
 .progress-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
+
 .logo {
   font-size: 14px;
   font-weight: 700;
@@ -76,6 +80,7 @@ html, body {
   margin-right: 6px;
   vertical-align: middle;
 }
+
 .back-btn {
   background: none;
   border: none;
@@ -89,15 +94,69 @@ html, body {
   -webkit-tap-highlight-color: transparent;
 }
 .back-btn:hover { color: var(--navy); }
-.step-back { display: block; text-align: center; width: 100%; }
-.step-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-  letter-spacing: 0.04em;
+.back-btn.hidden { visibility: hidden; pointer-events: none; }
+
+/* --- STEP DOTS TIMELINE --- */
+.step-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 12px;
 }
+
+.step-dot-item {
+  display: flex;
+  align-items: center;
+}
+
+.step-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  flex-shrink: 0;
+  background: var(--border);
+  color: var(--muted);
+  border: 2px solid var(--border);
+}
+
+.step-dot.done {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: var(--white);
+}
+
+.step-dot.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+  box-shadow: 0 0 0 4px rgba(201,168,76,0.18);
+}
+
+.step-dot-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin-top: 4px;
+  white-space: nowrap;
+}
+
+.dot-connector {
+  width: 32px; height: 2px;
+  background: var(--border);
+  transition: background 0.35s;
+  flex-shrink: 0;
+}
+.dot-connector.done { background: var(--navy); }
+
+/* --- PROGRESS BAR (thin, under dots) --- */
 .progress-bar-bg {
-  height: 4px;
+  height: 3px;
   background: var(--border);
   border-radius: 99px;
   overflow: hidden;
@@ -110,10 +169,12 @@ html, body {
   width: 25%;
 }
 
-/* MAIN LAYOUT */
+/* =========================================
+   MAIN LAYOUT
+   ========================================= */
 .screen {
   min-height: 100vh;
-  padding: 100px 20px 40px;
+  padding: 130px 20px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -138,31 +199,57 @@ html, body {
 }
 .step.slide-left { animation: slideInLeft 0.35s cubic-bezier(0.4, 0, 0.2, 1); }
 
-/* QUESTION */
+/* =========================================
+   QUESTION BLOCK
+   ========================================= */
 .question-emoji {
-  font-size: 48px;
-  margin-bottom: 16px;
+  font-size: 44px;
+  margin-bottom: 14px;
   display: block;
   text-align: center;
 }
+
 .question-title {
-  font-size: clamp(22px, 5vw, 28px);
+  font-size: clamp(20px, 5vw, 26px);
   font-weight: 800;
   color: var(--navy);
   text-align: center;
-  line-height: 1.2;
-  margin-bottom: 8px;
+  line-height: 1.25;
+  margin-bottom: 6px;
   letter-spacing: -0.03em;
 }
+
 .question-sub {
-  font-size: 14px;
+  font-size: 13px;
   color: var(--muted);
   text-align: center;
-  margin-bottom: 32px;
-  line-height: 1.5;
+  margin-bottom: 8px;
+  line-height: 1.55;
 }
 
-/* TILES */
+/* "Pour simplifier" callout */
+.simplify-note {
+  background: rgba(201,168,76,0.08);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 10px 10px 0;
+  padding: 10px 14px;
+  margin-bottom: 24px;
+  width: 100%;
+  max-width: 480px;
+  font-size: 12.5px;
+  color: #6B6040;
+  line-height: 1.55;
+  font-style: italic;
+}
+.simplify-note strong {
+  font-style: normal;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+/* =========================================
+   TILES
+   ========================================= */
 .tiles {
   display: flex;
   flex-direction: column;
@@ -176,10 +263,10 @@ html, body {
 }
 
 .tile {
-  background: var(--cream);
+  background: var(--white);
   border: 2px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px 18px;
+  padding: 18px 16px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
@@ -193,17 +280,15 @@ html, body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 10px;
-  padding: 24px 16px;
+  gap: 8px;
+  padding: 20px 14px;
 }
 .tile:hover {
   border-color: var(--gold);
   box-shadow: var(--shadow-hover);
   transform: translateY(-2px);
 }
-.tile:active {
-  transform: scale(0.97);
-}
+.tile:active { transform: scale(0.97); }
 .tile.selected {
   border-color: var(--navy);
   background: var(--navy);
@@ -214,20 +299,15 @@ html, body {
 .tile.selected .tile-sub {
   color: var(--white);
 }
-.tile.selected .tile-icon {
-  filter: brightness(10);
-}
-.tile.selected .tile-check {
-  opacity: 1;
-  transform: scale(1);
-}
+.tile.selected .tile-icon { filter: brightness(10); }
+.tile.selected .tile-check { opacity: 1; transform: scale(1); }
 
 .tile-icon {
-  font-size: 28px;
+  font-size: 26px;
   flex-shrink: 0;
   line-height: 1;
 }
-.tiles.two-col .tile-icon { font-size: 36px; }
+.tiles.two-col .tile-icon { font-size: 32px; }
 
 .tile-text { flex: 1; }
 .tiles.two-col .tile-text { flex: none; }
@@ -239,17 +319,17 @@ html, body {
   line-height: 1.2;
   transition: color 0.2s;
 }
-.tiles.two-col .tile-label { font-size: 14px; }
+.tiles.two-col .tile-label { font-size: 13px; }
 
 .tile-sub {
-  font-size: 12px;
+  font-size: 11.5px;
   color: var(--muted);
   margin-top: 2px;
   transition: color 0.2s;
 }
 
 .tile-check {
-  width: 24px; height: 24px;
+  width: 22px; height: 22px;
   background: var(--gold);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
@@ -258,11 +338,52 @@ html, body {
   transform: scale(0.5);
   transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
 }
 
-/* CONTACT STEP */
+/* =========================================
+   ECONOMY ESTIMATE CARD
+   ========================================= */
+.economy-card {
+  width: 100%;
+  background: linear-gradient(135deg, var(--navy) 0%, #1a3260 100%);
+  border-radius: var(--radius);
+  padding: 20px 20px;
+  margin-bottom: 20px;
+  color: var(--white);
+  text-align: center;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  box-shadow: 0 8px 32px rgba(13,31,60,0.25);
+}
+
+.economy-card-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 6px;
+}
+
+.economy-card-range {
+  font-size: clamp(22px, 6vw, 30px);
+  font-weight: 800;
+  color: var(--gold-light);
+  letter-spacing: -0.03em;
+  margin-bottom: 4px;
+}
+
+.economy-card-sub {
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* =========================================
+   CONTACT STEP
+   ========================================= */
 .contact-form {
   width: 100%;
   display: flex;
@@ -289,7 +410,7 @@ html, body {
   font-size: 16px;
   font-weight: 600;
   color: var(--navy);
-  background: var(--cream);
+  background: var(--white);
   outline: none;
   transition: border-color 0.2s;
   box-shadow: var(--shadow);
@@ -306,7 +427,7 @@ html, body {
   padding: 14px;
   border: 2px solid var(--border);
   border-radius: var(--radius);
-  background: var(--cream);
+  background: var(--white);
   cursor: pointer;
   font-family: 'Manrope', sans-serif;
   font-size: 14px;
@@ -351,31 +472,84 @@ html, body {
 .submit-btn:active { transform: scale(0.98); }
 
 .rgpd-note {
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--muted);
   text-align: center;
-  line-height: 1.5;
+  line-height: 1.55;
   margin-top: 4px;
 }
 .rgpd-note a { color: var(--gold); text-decoration: none; }
 
-/* HERO BADGE */
-.hero-badge {
+/* Social proof row */
+.social-proof-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.proof-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  background: rgba(201,168,76,0.12);
-  border: 1px solid rgba(201,168,76,0.3);
+  gap: 5px;
+  background: rgba(13,31,60,0.06);
   border-radius: 99px;
-  padding: 6px 14px;
-  font-size: 12px;
+  padding: 5px 12px;
+  font-size: 11px;
   font-weight: 700;
-  color: #9A7830;
-  margin-bottom: 20px;
-  letter-spacing: 0.02em;
+  color: var(--navy);
 }
 
-/* SUCCESS */
+/* =========================================
+   LOADING SCREEN
+   ========================================= */
+.loading-screen {
+  display: none;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.3s ease both;
+}
+.loading-screen.active { display: flex; }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.loading-spinner {
+  width: 56px; height: 56px;
+  border: 4px solid var(--border);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 24px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 10px;
+  letter-spacing: -0.03em;
+}
+.loading-msg {
+  font-size: 14px;
+  color: var(--muted);
+  transition: opacity 0.4s;
+}
+
+/* =========================================
+   SUCCESS SCREEN
+   ========================================= */
 .success-screen {
   display: none;
   width: 100%;
@@ -395,107 +569,136 @@ html, body {
   box-shadow: 0 8px 32px rgba(29,182,106,0.3);
   animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
 }
+
 @keyframes popIn {
   from { transform: scale(0); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
 .success-title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 800;
   color: var(--navy);
-  margin-bottom: 12px;
+  margin-bottom: 10px;
   letter-spacing: -0.03em;
 }
+
 .success-body {
-  font-size: 15px;
+  font-size: 14.5px;
   color: var(--muted);
   line-height: 1.65;
   max-width: 340px;
+  margin-bottom: 24px;
 }
 .success-body strong { color: var(--navy); }
 
 .recap-box {
   width: 100%;
-  background: var(--cream);
+  background: var(--white);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 20px;
-  margin: 24px 0;
   text-align: left;
-}
-.recap-title {
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
 }
 .recap-row {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   padding: 8px 0;
   border-bottom: 1px solid var(--border);
   font-size: 13px;
+  gap: 12px;
 }
 .recap-row:last-child { border-bottom: none; }
-.recap-lbl { color: var(--muted); }
-.recap-val { font-weight: 700; color: var(--navy); }
+.recap-key { color: var(--muted); font-weight: 600; flex-shrink: 0; }
+.recap-val { color: var(--navy); font-weight: 700; text-align: right; }
 
-/* ORIAS */
-.orias-footer {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: var(--cream);
-  border-top: 1px solid var(--border);
-  padding: 10px 20px;
+.cta-call {
+  width: 100%;
+  padding: 16px;
+  background: var(--gold);
+  color: var(--navy);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Manrope', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
   text-align: center;
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 0.03em;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  transition: all 0.2s;
+  letter-spacing: -0.01em;
+}
+.cta-call:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(201,168,76,0.4);
 }
 
-@media (min-width: 480px) {
-  .tiles.two-col { display: grid; grid-template-columns: 1fr 1fr; }
+/* Step back (inline) */
+.step-back-row {
+  margin-top: 14px;
+  width: 100%;
+  text-align: center;
 }
+
 </style>
 </head>
 <body>
 
-<!-- PROGRESS -->
-<div class="progress-wrap">
+<!-- ===================== PROGRESS HEADER ===================== -->
+<div class="progress-wrap" id="progressWrap">
   <div class="progress-top">
     <div class="logo"><span></span>Victor Julia</div>
-    <div class="step-label" id="stepLabel">Étape 1 sur 4</div>
+    <button class="back-btn hidden" id="backBtnTop" onclick="goBack()">← Retour</button>
   </div>
+
+  <!-- Step dots timeline -->
+  <div class="step-dots" id="stepDots">
+    <!-- generated by JS -->
+  </div>
+
   <div class="progress-bar-bg">
     <div class="progress-bar-fill" id="progressFill"></div>
   </div>
 </div>
 
+<!-- ===================== MAIN SCREEN ===================== -->
 <div class="screen">
 
-  <!-- STEP 1 Capital -->
+  <!-- STEP 1 : Montant emprunté -->
   <div class="step active" id="s1">
     <span class="question-emoji">🏠</span>
-    <h1 class="question-title">Quel est votre capital restant dû ?</h1>
-    <p class="question-sub">Une estimation suffit, je fais l'analyse précise lors de notre échange.</p>
+    <h1 class="question-title">Quel montant avez-vous emprunté ?</h1>
+    <p class="question-sub">Un ordre de grandeur suffit, pas besoin de vérifier votre contrat.</p>
+    <div class="simplify-note">
+      Pour simplifier : c'est le montant total que vous avez <strong>demandé à la banque</strong> pour financer votre achat immobilier, avant tout remboursement.
+    </div>
     <div class="tiles">
-      <div class="tile" onclick="selectTile(this, 's1', 'capital', 'Moins de 100 000 €')">
-        <span class="tile-icon">💶</span>
+      <div class="tile" onclick="selectTile(this, 's1', 'capital', 'Moins de 50 000 €')">
+        <span class="tile-icon">🌱</span>
         <div class="tile-text">
-          <div class="tile-label">Moins de 100 000 €</div>
-          <div class="tile-sub">Capital restant faible</div>
+          <div class="tile-label">Moins de 50 000 €</div>
+          <div class="tile-sub">Petit prêt immobilier</div>
         </div>
         <div class="tile-check">✓</div>
       </div>
-      <div class="tile" onclick="selectTile(this, 's1', 'capital', 'Entre 100 000 € et 250 000 €')">
+      <div class="tile" onclick="selectTile(this, 's1', 'capital', '50 000 à 150 000 €')">
         <span class="tile-icon">🏡</span>
         <div class="tile-text">
-          <div class="tile-label">100 000 € – 250 000 €</div>
-          <div class="tile-sub">La majorité des dossiers</div>
+          <div class="tile-label">50 000 à 150 000 €</div>
+          <div class="tile-sub">Prêt classique</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's1', 'capital', '150 000 à 250 000 €')">
+        <span class="tile-icon">🏘️</span>
+        <div class="tile-text">
+          <div class="tile-label">150 000 à 250 000 €</div>
+          <div class="tile-sub">Prêt important</div>
         </div>
         <div class="tile-check">✓</div>
       </div>
@@ -510,45 +713,68 @@ html, body {
     </div>
   </div>
 
-  <!-- STEP 2 Durée -->
+  <!-- STEP 2 : Pourcentage remboursé -->
   <div class="step" id="s2">
-    <span class="question-emoji">📅</span>
-    <h1 class="question-title">Depuis combien de temps remboursez-vous ?</h1>
-    <p class="question-sub">La durée écoulée détermine l'économie potentielle.</p>
+    <span class="question-emoji">📊</span>
+    <h1 class="question-title">Quelle part avez-vous déjà remboursée ?</h1>
+    <p class="question-sub">Là encore, un ordre de grandeur suffit largement.</p>
+    <div class="simplify-note">
+      Pour simplifier : si vous avez emprunté 200 000 € et qu'il vous en reste 150 000 à rembourser, vous en êtes à environ <strong>25 %</strong> de remboursé.
+    </div>
     <div class="tiles">
-      <div class="tile" onclick="selectTile(this, 's2', 'duree', 'Moins de 3 ans')">
-        <span class="tile-icon">🌱</span>
+      <div class="tile" onclick="selectTile(this, 's2', 'pct_rembourse', 'Moins de 25 %')">
+        <span class="tile-icon">🔵</span>
         <div class="tile-text">
-          <div class="tile-label">Moins de 3 ans</div>
-          <div class="tile-sub">Économies maximales possibles</div>
+          <div class="tile-label">Moins de 25 %</div>
+          <div class="tile-sub">Début du remboursement</div>
         </div>
         <div class="tile-check">✓</div>
       </div>
-      <div class="tile" onclick="selectTile(this, 's2', 'duree', 'Entre 3 et 10 ans')">
-        <span class="tile-icon">📈</span>
+      <div class="tile" onclick="selectTile(this, 's2', 'pct_rembourse', '25 % à 50 %')">
+        <span class="tile-icon">🟡</span>
         <div class="tile-text">
-          <div class="tile-label">3 à 10 ans</div>
-          <div class="tile-sub">Belles économies encore disponibles</div>
+          <div class="tile-label">25 % à 50 %</div>
+          <div class="tile-sub">Premier quart à mi-parcours</div>
         </div>
         <div class="tile-check">✓</div>
       </div>
-      <div class="tile" onclick="selectTile(this, 's2', 'duree', 'Plus de 10 ans')">
+      <div class="tile" onclick="selectTile(this, 's2', 'pct_rembourse', '50 % à 75 %')">
+        <span class="tile-icon">🟠</span>
+        <div class="tile-text">
+          <div class="tile-label">50 % à 75 %</div>
+          <div class="tile-sub">Plus de la moitié derrière vous</div>
+        </div>
+        <div class="tile-check">✓</div>
+      </div>
+      <div class="tile" onclick="selectTile(this, 's2', 'pct_rembourse', 'Plus de 75 %')">
         <span class="tile-icon">🏁</span>
         <div class="tile-text">
-          <div class="tile-label">Plus de 10 ans</div>
-          <div class="tile-sub">Je vérifie avec vous</div>
+          <div class="tile-label">Plus de 75 %</div>
+          <div class="tile-sub">Bientôt la ligne d'arrivée</div>
         </div>
         <div class="tile-check">✓</div>
       </div>
     </div>
-    <button class="back-btn step-back" onclick="goBack()" style="margin-top:16px;">← Retour</button>
+    <div class="step-back-row">
+      <button class="back-btn" onclick="goBack()">← Retour</button>
+    </div>
   </div>
 
-  <!-- STEP 3 Renégocié -->
+  <!-- STEP 3 : Déjà changé + estimation -->
   <div class="step" id="s3">
     <span class="question-emoji">🔄</span>
     <h1 class="question-title">Avez-vous déjà changé d'assurance de prêt ?</h1>
-    <p class="question-sub">Depuis la loi Lemoine, c'est possible à tout moment même plusieurs fois.</p>
+    <div class="simplify-note">
+      Pour simplifier : depuis la <strong>loi Lemoine</strong> (2022), vous pouvez changer d'<strong>assurance emprunteur</strong> à tout moment, sans frais ni justification, même si vous avez déjà changé une fois.
+    </div>
+
+    <!-- Economy estimate card (populated by JS) -->
+    <div class="economy-card" id="economyCard">
+      <div class="economy-card-label">Économie potentielle estimée</div>
+      <div class="economy-card-range" id="economyRange">...</div>
+      <div class="economy-card-sub">À titre indicatif, basé sur des cas observés. Non contractuel, votre situation réelle sera analysée avec vous.</div>
+    </div>
+
     <div class="tiles two-col">
       <div class="tile" onclick="selectTile(this, 's3', 'renego', 'Non, jamais')">
         <span class="tile-icon">🙅</span>
@@ -565,14 +791,22 @@ html, body {
         <div class="tile-check">✓</div>
       </div>
     </div>
-    <button class="back-btn step-back" onclick="goBack()" style="margin-top:16px;">← Retour</button>
+    <div class="step-back-row">
+      <button class="back-btn" onclick="goBack()">← Retour</button>
+    </div>
   </div>
 
-  <!-- STEP 4 Contact -->
+  <!-- STEP 4 : Contact -->
   <div class="step" id="s4">
     <span class="question-emoji">👋</span>
     <h1 class="question-title">On se contacte !</h1>
-    <p class="question-sub">Je reviens vers vous rapidement pour votre analyse gratuite.</p>
+    <p class="question-sub">Je reviens vers vous pour votre analyse gratuite, une seule fois, sans démarchage.</p>
+
+    <div class="social-proof-row">
+      <span class="proof-badge">⭐ Analyse gratuite</span>
+      <span class="proof-badge">🔒 Sans engagement</span>
+      <span class="proof-badge">📞 Réponse sous 24h</span>
+    </div>
 
     <div class="contact-form">
       <div class="input-group">
@@ -594,7 +828,10 @@ html, body {
         <input type="email" class="input-field" id="c_email" placeholder="marie@email.fr" autocomplete="email" style="display:none;">
       </div>
 
-      <button class="back-btn step-back" onclick="goBack()" style="margin-bottom:8px;">← Retour</button>
+      <div class="step-back-row" style="margin-top:0; margin-bottom:4px;">
+        <button class="back-btn" onclick="goBack()">← Retour</button>
+      </div>
+
       <button class="submit-btn" id="btn-submit-ade" onclick="submitForm()">Envoyer ma demande</button>
 
       <p class="rgpd-note">
@@ -604,98 +841,221 @@ html, body {
     </div>
   </div>
 
+  <!-- LOADING -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-spinner"></div>
+    <p class="loading-title">Analyse en cours...</p>
+    <p class="loading-msg" id="loadingMsg">Vérification de votre situation</p>
+  </div>
+
   <!-- SUCCESS -->
   <div class="success-screen" id="successScreen">
     <div class="success-circle">✓</div>
     <h2 class="success-title">Demande reçue !</h2>
-    <p class="success-body">Je reviens vers vous rapidement pour votre analyse personnalisée. À très vite !</p>
-    <div class="recap-box" id="recapBox">
-      <div class="recap-title">Votre dossier</div>
-      <div class="recap-row"><span class="recap-lbl">Capital restant</span><span class="recap-val" id="r_capital"></span></div>
-      <div class="recap-row"><span class="recap-lbl">Remboursement</span><span class="recap-val" id="r_duree"></span></div>
-      <div class="recap-row"><span class="recap-lbl">Déjà renégocié</span><span class="recap-val" id="r_renego"></span></div>
-      <div class="recap-row"><span class="recap-lbl">Contact</span><span class="recap-val" id="r_contact"></span></div>
+    <p class="success-body">Je reviens vers vous rapidement pour votre <strong>analyse personnalisée et gratuite</strong>. Pas de démarchage, une seule prise de contact.</p>
+
+    <div class="recap-box">
+      <div class="recap-row">
+        <span class="recap-key">Montant emprunté</span>
+        <span class="recap-val" id="r_capital"></span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-key">Déjà remboursé</span>
+        <span class="recap-val" id="r_pct"></span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-key">Changement d'assurance</span>
+        <span class="recap-val" id="r_renego"></span>
+      </div>
+      <div class="recap-row">
+        <span class="recap-key">Contact</span>
+        <span class="recap-val" id="r_contact"></span>
+      </div>
     </div>
-    <p class="success-body" style="font-size:13px;">
-      Ou prenez directement rendez-vous :<br>
-      <a href="https://cal.com/victor-julia/30min" target="_blank" style="color:var(--gold);font-weight:700;">cal.com/victor-julia →</a>
-    </p>
+
+    <a href="https://cal.com/victor-julia/30min" target="_blank" class="cta-call">
+      📅 Prendre rendez-vous directement
+    </a>
   </div>
 
-</div>
+</div><!-- /screen -->
 
-<div class="orias-footer">Victor Julia CGP · Courtier Indépendant · ORIAS n° 25 005 899 · Étude gratuite, sans engagement</div>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-583ZVTMW');</script>
 
 <script>
-const answers = {};
-let contactPref = null;
+// =====================================================
+// STATE
+// =====================================================
 let currentStep = 1;
-const totalSteps = 4;
+const TOTAL_STEPS = 4;
+let contactPref = null;
+const answers = {};
 
-const progressFill = document.getElementById('progressFill');
-const stepLabel = document.getElementById('stepLabel');
+// Step labels for the dot timeline
+const stepLabels = ['Montant', 'Remboursé', 'Historique', 'Contact'];
 
-function updateProgress(step) {
-  const pct = (step / totalSteps) * 100;
-  progressFill.style.width = pct + '%';
-  if (step <= totalSteps) {
-    stepLabel.textContent = 'Étape ' + step + ' sur ' + totalSteps;
-  } else {
-    stepLabel.textContent = 'Terminé ✓';
+// Economy estimate matrix [min, max] in €
+// Key: capital tile value -> % remboursé tile value
+const economyMatrix = {
+  'Moins de 50 000 €': {
+    'Moins de 25 %':  [400, 1500],
+    '25 % à 50 %':   [300, 1000],
+    '50 % à 75 %':   [150, 600],
+    'Plus de 75 %':  [50,  250]
+  },
+  '50 000 à 150 000 €': {
+    'Moins de 25 %':  [1500, 6000],
+    '25 % à 50 %':   [1000, 4000],
+    '50 % à 75 %':   [500,  2000],
+    'Plus de 75 %':  [200,  800]
+  },
+  '150 000 à 250 000 €': {
+    'Moins de 25 %':  [4000, 14000],
+    '25 % à 50 %':   [2500, 9000],
+    '50 % à 75 %':   [1000, 4500],
+    'Plus de 75 %':  [300,  1500]
+  },
+  'Plus de 250 000 €': {
+    'Moins de 25 %':  [6000, 18000],
+    '25 % à 50 %':   [4000, 12000],
+    '50 % à 75 %':   [2000, 7000],
+    'Plus de 75 %':  [600,  2500]
+  }
+};
+
+function formatEuro(n) {
+  return n.toLocaleString('fr-FR') + ' €';
+}
+
+// =====================================================
+// DOTS TIMELINE
+// =====================================================
+function buildDots() {
+  const container = document.getElementById('stepDots');
+  container.innerHTML = '';
+  for (let i = 1; i <= TOTAL_STEPS; i++) {
+    const item = document.createElement('div');
+    item.className = 'step-dot-item';
+
+    const dot = document.createElement('div');
+    dot.className = 'step-dot';
+    dot.id = 'dot' + i;
+
+    if (i < currentStep) {
+      dot.className = 'step-dot done';
+      dot.innerHTML = '✓';
+    } else if (i === currentStep) {
+      dot.className = 'step-dot active';
+      dot.textContent = i;
+    } else {
+      dot.textContent = i;
+    }
+
+    item.appendChild(dot);
+
+    if (i < TOTAL_STEPS) {
+      const connector = document.createElement('div');
+      connector.className = 'dot-connector' + (i < currentStep ? ' done' : '');
+      item.appendChild(connector);
+    }
+
+    container.appendChild(item);
   }
 }
 
+function updateProgress(step) {
+  document.getElementById('progressFill').style.width = (step / TOTAL_STEPS * 100) + '%';
+  document.getElementById('backBtnTop').classList.toggle('hidden', step <= 1);
+  buildDots();
+}
+
+// =====================================================
+// TILE SELECTION
+// =====================================================
 function selectTile(el, stepId, key, value) {
-  // Deselect all tiles in this step
-  const tiles = document.querySelectorAll('#' + stepId + ' .tile');
+  // Deselect siblings
+  const tiles = el.closest('.tiles').querySelectorAll('.tile');
   tiles.forEach(t => t.classList.remove('selected'));
-  
-  // Select this tile
   el.classList.add('selected');
   answers[key] = value;
 
-  // Auto-advance after short delay
-  setTimeout(() => {
-    goNext(stepId);
-  }, 400);
-}
-
-function goNext(currentId) {
-  const stepNum = parseInt(currentId.replace('s', ''));
-  const nextNum = stepNum + 1;
-  
-  const currentEl = document.getElementById(currentId);
-  const nextEl = document.getElementById('s' + nextNum);
-  
-  currentEl.classList.remove('active');
-  currentEl.classList.remove('slide-left');
-  
-  if (nextEl) {
-    nextEl.classList.remove('slide-left');
-    nextEl.classList.add('active');
-    currentStep = nextNum;
-    updateProgress(nextNum);
-    
-  } else {
-    // Show success
-    document.getElementById('successScreen').classList.add('active');
-    document.getElementById('stepLabel').textContent = 'Terminé ✓';
-    progressFill.style.width = '100%';
+  // GA4 event
+  if (window.dataLayer) {
+    window.dataLayer.push({ event: 'simulator_step_' + stepId, answer: value });
   }
+
+  // Auto-advance after short delay
+  setTimeout(() => goNext(stepId), 320);
 }
 
+function goNext(fromStepId) {
+  const stepNum = parseInt(fromStepId.replace('s', ''));
+  const currentEl = document.getElementById(fromStepId);
+  const nextEl = document.getElementById('s' + (stepNum + 1));
+
+  if (!nextEl) return;
+
+  // If entering step 3, populate economy card
+  if (stepNum + 1 === 3) {
+    populateEconomyCard();
+  }
+
+  currentEl.classList.remove('active', 'slide-left');
+  nextEl.classList.add('active');
+  nextEl.classList.remove('slide-left');
+  currentStep = stepNum + 1;
+  updateProgress(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  if (currentStep <= 1) return;
+  const currentEl = document.getElementById('s' + currentStep);
+  const prevEl = document.getElementById('s' + (currentStep - 1));
+
+  currentEl.classList.remove('active');
+  prevEl.classList.add('active', 'slide-left');
+  currentStep--;
+  updateProgress(currentStep);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// =====================================================
+// ECONOMY CARD
+// =====================================================
+function populateEconomyCard() {
+  const capital = answers['capital'];
+  const pct = answers['pct_rembourse'];
+
+  if (!capital || !pct) return;
+
+  const range = (economyMatrix[capital] || {})[pct];
+  if (!range) return;
+
+  document.getElementById('economyRange').textContent =
+    'entre ' + formatEuro(range[0]) + ' et ' + formatEuro(range[1]);
+}
+
+// =====================================================
+// CONTACT PREF
+// =====================================================
 function setPref(pref) {
   contactPref = pref;
   document.getElementById('pref_tel').classList.toggle('active', pref === 'tel');
   document.getElementById('pref_email').classList.toggle('active', pref === 'email');
-  
+
   const wrap = document.getElementById('contact_wrap');
   const lbl = document.getElementById('contact_label');
   const telInput = document.getElementById('c_tel');
   const emailInput = document.getElementById('c_email');
-  
+
   wrap.style.display = 'block';
-  
+
   if (pref === 'tel') {
     lbl.textContent = 'Votre téléphone';
     telInput.style.display = 'block';
@@ -709,30 +1069,61 @@ function setPref(pref) {
   }
 }
 
+// =====================================================
+// LOADING THEN SUCCESS
+// =====================================================
+const loadingMessages = [
+  'Vérification de votre situation...',
+  'Analyse du capital restant...',
+  'Comparaison des offres disponibles...',
+  'Calcul de votre économie potentielle...'
+];
+
+function showLoading(onDone) {
+  document.getElementById('s4').classList.remove('active');
+  const loadingScreen = document.getElementById('loadingScreen');
+  loadingScreen.classList.add('active');
+
+  let idx = 0;
+  const msgEl = document.getElementById('loadingMsg');
+  msgEl.textContent = loadingMessages[0];
+
+  const interval = setInterval(() => {
+    idx++;
+    if (idx < loadingMessages.length) {
+      msgEl.style.opacity = '0';
+      setTimeout(() => {
+        msgEl.textContent = loadingMessages[idx];
+        msgEl.style.opacity = '1';
+      }, 200);
+    }
+  }, 600);
+
+  setTimeout(() => {
+    clearInterval(interval);
+    loadingScreen.classList.remove('active');
+    onDone();
+  }, 2600);
+}
+
+// =====================================================
+// SUBMIT
+// =====================================================
 function submitForm() {
   const prenom = document.getElementById('c_prenom').value.trim();
   if (!prenom) { alert('Merci d\'indiquer votre prénom.'); return; }
   if (!contactPref) { alert('Choisissez votre préférence de contact.'); return; }
-  
+
   const tel = document.getElementById('c_tel').value.trim();
   const email = document.getElementById('c_email').value.trim();
-  
+
   if (contactPref === 'tel' && !tel) { alert('Merci d\'indiquer votre téléphone.'); return; }
   if (contactPref === 'email' && !email) { alert('Merci d\'indiquer votre email.'); return; }
 
-  // Populate recap
-  document.getElementById('r_capital').textContent = answers.capital || '';
-  document.getElementById('r_duree').textContent = answers.duree || '';
-  document.getElementById('r_renego').textContent = answers.renego || '';
-  document.getElementById('r_contact').textContent = contactPref === 'tel' ? tel : email;
+  // Disable button to avoid double submit
+  document.getElementById('btn-submit-ade').disabled = true;
 
-  // Hide form step
-  document.getElementById('s4').classList.remove('active');
-  document.getElementById('successScreen').classList.add('active');
-  progressFill.style.width = '100%';
-  stepLabel.textContent = 'Terminé ✓';
-
-  // Meta Pixel - événement Lead
+  // Meta Pixel Lead event
   if (typeof fbq === 'function') {
     fbq('track', 'Lead', {
       content_name: 'Assurance Emprunteur',
@@ -741,11 +1132,19 @@ function submitForm() {
     });
   }
 
-  // Send to Make webhook
+  // GA4
+  if (window.dataLayer) {
+    window.dataLayer.push({ event: 'lead_submitted', source: 'Landing Facebook ADE' });
+  }
+
+  // Update progress to complete
+  document.getElementById('progressFill').style.width = '100%';
+
+  // Send to Make webhook (fire and forget)
   const payload = {
     prenom,
     capital: answers.capital,
-    duree: answers.duree,
+    pct_rembourse: answers.pct_rembourse,
     renego: answers.renego,
     contact_pref: contactPref,
     tel: contactPref === 'tel' ? tel : '',
@@ -760,30 +1159,28 @@ function submitForm() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   }).catch(e => console.error('Make webhook:', e));
+
+  // Show loading, then success
+  showLoading(() => {
+    // Populate recap
+    document.getElementById('r_capital').textContent = answers.capital || '';
+    document.getElementById('r_pct').textContent = answers.pct_rembourse || '';
+    document.getElementById('r_renego').textContent = answers.renego || '';
+    document.getElementById('r_contact').textContent = contactPref === 'tel' ? tel : email;
+
+    document.getElementById('successScreen').classList.add('active');
+
+    // Hide dots/back
+    document.getElementById('backBtnTop').classList.add('hidden');
+    buildDots(); // will show all done
+  });
 }
 
-
-function goBack() {
-  if (currentStep <= 1) return;
-  const currentEl = document.getElementById('s' + currentStep);
-  const prevEl = document.getElementById('s' + (currentStep - 1));
-  
-  currentEl.classList.remove('active');
-  prevEl.classList.add('active', 'slide-left');
-  currentStep--;
-  updateProgress(currentStep);
-  
-}
-// Init progress
+// =====================================================
+// INIT
+// =====================================================
 updateProgress(1);
 </script>
-
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-583ZVTMW');</script>
 
 </body>
 </html>
