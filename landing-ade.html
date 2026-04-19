@@ -1304,6 +1304,21 @@ function submitForm() {
   if (contactPref === 'tel' && !tel) { showError('Merci d\'indiquer votre numéro de téléphone.'); return; }
   if (contactPref === 'email' && !email) { showError('Merci d\'indiquer votre adresse e-mail.'); return; }
 
+  // Validation téléphone : 10 chiffres français (06, 07, 01-05, 08, 09)
+  if (contactPref === 'tel') {
+    const telClean = tel.replace(/[\s.\-]/g, '');
+    if (!/^(0[1-9][0-9]{8}|\+33[1-9][0-9]{8})$/.test(telClean)) {
+      showError('Numéro invalide. Ex : 06 12 34 56 78'); return;
+    }
+  }
+
+  // Validation email basique
+  if (contactPref === 'email') {
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      showError('Adresse e-mail invalide. Ex : prenom@gmail.com'); return;
+    }
+  }
+
   // Affichage prénom dans la page succès
   document.getElementById('r_prenom').textContent = prenom;
 
