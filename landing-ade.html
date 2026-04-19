@@ -1360,10 +1360,9 @@ function submitForm() {
 
   fetch('https://hook.eu1.make.com/zrofex9q6cvu9ul8ysel6t9acgeyc2wu', {
     method: 'POST',
-    mode: 'no-cors',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
-  }).catch(e => console.warn('Make webhook:', e));
+  }).catch(e => console.warn('Make webhook (ignoré en preview) :', e));
 }
 
 // ─── ERREUR DOUCE ────────────────────────────────────
