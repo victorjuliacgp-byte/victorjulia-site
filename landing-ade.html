@@ -1353,7 +1353,7 @@ function submitForm() {
     contact_pref: contactPref,
     tel: contactPref === 'tel' ? tel : '',
     email: contactPref === 'email' ? email : '',
-    source: 'Landing Facebook ADE',
+    source: new URLSearchParams(window.location.search).get('utm_source') || 'Direct', utm_medium: new URLSearchParams(window.location.search).get('utm_medium') || '', utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign') || '', utm_content: new URLSearchParams(window.location.search).get('utm_content') || '',
     date_lead: new Date().toISOString().split('T')[0],
     statut: 'Lead entrant'
   };
